@@ -4,7 +4,7 @@
 namespace App\Repositories;
 
 use PEAR2\Net\RouterOS;
-use App\Lib\routerOSAPI;
+use App\Lib\RouterOSAPI;
 
 class RouterOSRepository implements RouterOSInterface
 {

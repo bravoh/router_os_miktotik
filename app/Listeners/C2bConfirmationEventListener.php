@@ -44,7 +44,7 @@ class C2bConfirmationEventListener
             "target" => $service->target_ip,
             "max-limit" => "5M/5M",
             "limit-at" => "5M/5M",
-            "comment" => ucwords($customer->name)." plan renewal"
+            "comment" => ucwords($customer->name)." automatic plan update"
         );
 
         $this->routerOsRepository->enableQueued($data);
