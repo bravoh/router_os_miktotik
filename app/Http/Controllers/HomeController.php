@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Lib\MikrotikAPIClass;
-use App\Repositories\RouterOSRepository;
 
 class HomeController extends Controller
 {
@@ -15,7 +14,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct(RouterOSRepository $routerOSRepository)
+    public function __construct()
     {
         $this->MIKROTIK = new MikrotikAPIClass();
         $this->middleware('auth');
