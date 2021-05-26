@@ -58,8 +58,8 @@ class C2bConfirmationEventListener
             ->orWhere('phone',$transaction->BillRefNumber)
             ->first();
 
-        $service = $customer->active_plan();
-        $plan = $service->plan;
+        //$service = $customer->active_plan();
+        //$plan = $service->plan;
         $amount = $transaction->TransAmount;
 
         $rate = $this->rates[$amount];
