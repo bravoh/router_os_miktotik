@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         C2bConfirmationEvent::class =>[
             C2bConfirmationEventListener::class
-        ]
+        ],
     ];
 
     /**

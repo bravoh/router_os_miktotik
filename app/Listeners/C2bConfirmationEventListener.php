@@ -23,6 +23,7 @@ class C2bConfirmationEventListener
     public function __construct()
     {
         $this->MIKROTIK = new MikrotikAPIClass();
+
         $this->rates = array(
             1 => array(
                 'name'=>"3mbps",
@@ -73,6 +74,7 @@ class C2bConfirmationEventListener
             "comment" => ucwords($customer->name)." Acc No ".$customer->customer_no." automatic plan update"
         );
 
+        Log::alert('New Callback Received '.json_encode($transaction));
         Log::info(json_encode($data));
         $this->MIKROTIK->queue($data);
     }
