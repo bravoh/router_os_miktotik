@@ -27,7 +27,7 @@ class RouterOSAPI
     var $attempts = 5;       // Connection attempt count
     var $connected = false;  // Connection state
     var $delay = 3;          // Delay between connection attempts in seconds
-    //var $port = 8728;        // Port to connect to
+    var $port = 8728;        // Port to connect to
     var $timeout = 3;        // Connection attempt timeout and data read timeout
     var $socket;             // Variable for storing socket resource
 

@@ -102,6 +102,9 @@
       <path value="$PROJECT_DIR$/vendor/pear2/net_routeros" />
       <path value="$PROJECT_DIR$/vendor/pear2/net_transmitter" />
       <path value="$PROJECT_DIR$/vendor/africastalking/africastalking" />
+      <path value="$PROJECT_DIR$/vendor/evilfreelancer/routeros-api-php" />
+      <path value="$PROJECT_DIR$/vendor/divineomega/php-ssh-connection" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

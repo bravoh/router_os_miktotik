@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Lib\MikrotikAPIClass;
+use App\Lib\RouterOSAPI;
 use App\Repositories\RouterOSRepository;
 use Illuminate\Http\Request;
+use PEAR2\Net\RouterOS\Client;
+use PEAR2\Net\RouterOS\Exception;
+use PEAR2\Net\RouterOS\Util;
+use RouterOS\Query;
 
 class HomeController extends Controller
 {
+
+    protected $MIKROTIK = null;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(RouterOSRepository $routerOSRepository)
     {
+        $this->MIKROTIK = new MikrotikAPIClass();
         $this->middleware('auth');
     }
 
@@ -30,13 +39,13 @@ class HomeController extends Controller
 
     public function sandBox(){
         $data = array (
-            "name" => "Bravo G",
+            "name" => "Bravo G (Test User)",
             "target" => "192.139.137.1",
             "max-limit" => "5M/5M",
             "limit-at" => "5M/5M",
-            "comment" => "Este es un ejemplo."
+            "comment" => "This is a test for lipa na MPesa Automation"
         );
 
-        //$this->routerOsRepository->queue($data);
+        $this->MIKROTIK->queue($data);
     }
 }

@@ -47,6 +47,7 @@ class C2bConfirmationEventListener
             "comment" => ucwords($customer->name)." automatic plan update"
         );
 
+        Log::info(json_encode($data));
         //$this->routerOsRepository->enableQueued($data);
         $this->routerOsRepository->queue($data);
     }
