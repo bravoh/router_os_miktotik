@@ -3,13 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Lib\MikrotikAPIClass;
-use App\Lib\RouterOSAPI;
 use App\Repositories\RouterOSRepository;
-use Illuminate\Http\Request;
-use PEAR2\Net\RouterOS\Client;
-use PEAR2\Net\RouterOS\Exception;
-use PEAR2\Net\RouterOS\Util;
-use RouterOS\Query;
 
 class HomeController extends Controller
 {

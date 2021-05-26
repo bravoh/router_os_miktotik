@@ -7,7 +7,6 @@ use RouterOS\Query;
 use RouterOS\Config;
 use RouterOS\Client;
 
-
 class MikrotikAPIClass
 {
     /**

@@ -4,9 +4,6 @@ namespace App\Listeners;
 
 use App\Customer;
 use App\Lib\MikrotikAPIClass;
-use App\Repositories\RouterOSRepository;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 
 class C2bConfirmationEventListener
