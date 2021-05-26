@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Customer;
+use App\Lib\MikrotikAPIClass;
 use App\Repositories\RouterOSRepository;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,16 +12,39 @@ use Illuminate\Support\Facades\Log;
 class C2bConfirmationEventListener
 {
 
-    protected $routerOsRepository = null;
+    protected $MIKROTIK = null;
+    private $rates;
 
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(RouterOSRepository $routerOsRepository)
+    public function __construct()
     {
-        $this->routerOsRepository = $routerOsRepository;
+        $this->MIKROTIK = new MikrotikAPIClass();
+        $this->rates = array(
+            1 => array(
+                'name'=>"3mbps",
+                'max-limit'=>"3M/3M",
+                'limit-at'=>"3M/3M"
+            ),
+            1500 => array(
+                'name'=>"3mbps",
+                'max-limit'=>"3M/3M",
+                'limit-at'=>"3M/3M"
+            ),
+            2500 => array(
+                'name'=>"5mbps",
+                'max-limit'=>"5M/5M",
+                'limit-at'=>"5M/5M"
+            ),
+            5000 => array(
+                "name"=>"10mbs",
+                'max-limit'=>"10M/10M",
+                'limit-at'=>"10M/10M"
+            )
+        );
     }
 
     /**
@@ -38,17 +62,18 @@ class C2bConfirmationEventListener
 
         $service = $customer->active_plan();
         $plan = $service->plan;
+        $amount = $transaction->TransAmount;
 
+        $rate = $this->rates[$amount];
         $data = array (
             "name" => $customer->name,
-            "target" => $service->target_ip,
-            "max-limit" => "5M/5M",
-            "limit-at" => "5M/5M",
-            "comment" => ucwords($customer->name)." automatic plan update"
+            "target" => "192.168.306.".$customer->id,
+            "max-limit" => $rate['max-limit'],
+            "limit-at" => $rate['limit-at'],
+            "comment" => ucwords($customer->name)." Acc No ".$customer->customer_no." automatic plan update"
         );
 
         Log::info(json_encode($data));
-        //$this->routerOsRepository->enableQueued($data);
-        $this->routerOsRepository->queue($data);
+        $this->MIKROTIK->queue($data);
     }
 }
