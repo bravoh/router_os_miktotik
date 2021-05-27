@@ -232,7 +232,9 @@
       <workItem from="1621881699157" duration="5749000" />
       <workItem from="1621922689539" duration="617000" />
       <workItem from="1622011791447" duration="2373000" />
-      <workItem from="1622018129960" duration="16001000" />
+      <workItem from="1622018129960" duration="19125000" />
+      <workItem from="1622096511830" duration="603000" />
+      <workItem from="1622108352056" duration="857000" />
     </task>
     <servers />
   </component>
@@ -249,6 +251,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="1303" y="397" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1622028419549">

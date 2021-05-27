@@ -22,22 +22,22 @@ class C2bConfirmationEventListener
         $this->MIKROTIK = new MikrotikAPIClass();
 
         $this->rates = array(
-            1 => array(
+            '1.00' => array(
                 'name'=>"3mbps",
                 'max-limit'=>"3M/3M",
                 'limit-at'=>"3M/3M"
             ),
-            1500 => array(
+            '1500.00' => array(
                 'name'=>"3mbps",
                 'max-limit'=>"3M/3M",
                 'limit-at'=>"3M/3M"
             ),
-            2500 => array(
+            '2500.00' => array(
                 'name'=>"5mbps",
                 'max-limit'=>"5M/5M",
                 'limit-at'=>"5M/5M"
             ),
-            5000 => array(
+            '5000' => array(
                 "name"=>"10mbs",
                 'max-limit'=>"10M/10M",
                 'limit-at'=>"10M/10M"
@@ -60,9 +60,8 @@ class C2bConfirmationEventListener
 
         //$service = $customer->active_plan();
         //$plan = $service->plan;
-        $amount = $transaction->TransAmount;
+        $rate = $this->rates[$transaction->TransAmount];
 
-        $rate = $this->rates[$amount];
         $data = array (
             "name" => $customer->name,
             "target" => "192.168.306.".$customer->id,
