@@ -14,6 +14,7 @@
 
 
                     <div class="card-body">
+                        <a href="{{route('customers.create')}}" class="btn btn-primary">Add</a>
                         <table class="table table-sm table-striped table-borderless">
                             <thead>
                                 <tr>
@@ -22,6 +23,7 @@
                                     <th>Phone</th>
                                     <th>Email</th>
                                     <th>Account Number</th>
+                                    <th>IP</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,6 +34,7 @@
                                 <td>{{$item->phone}}</td>
                                 <td>{{$item->email}}</td>
                                 <td>{{$item->customer_no}}</td>
+                                <td>{{$item->default_target_ip}}</td>
                             </tr>
                             @endforeach
                             </tbody>

@@ -25,6 +25,7 @@ class CustomerController extends Controller
             'name'=>\request()->name,
             'email'=>\request()->email,
             'phone'=>\request()->phone,
+            'default_target_ip'=>\request()->default_target_ip,
         ]);
         if (!$edit)
             $this->generateCustomerNo($customer);

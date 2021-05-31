@@ -33,11 +33,19 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 mt-3">
+                                <div class="col-sm-6 mt-3">
                                     <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
                                     <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
                                     <div class="invalid-feedback">
                                         Please enter a valid email address for shipping updates.
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 mt-3">
+                                    <label for="email" class="form-label">Default Target IP</label>
+                                    <input type="text" name="default_target_ip" class="form-control" id="default_target_ip" placeholder="192.168.57.81">
+                                    <div class="invalid-feedback">
+                                        Please enter a valid IP Address.
                                     </div>
                                 </div>
                             </div>
