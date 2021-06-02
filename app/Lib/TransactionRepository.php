@@ -36,7 +36,7 @@ class TransactionRepository
             "trx_code"=>$this->callback->TransID,
             "customer_id"=>$this->customer->id,
             "customer_name"=>$this->customer->name,
-            "uuid"=>Uuid::fromInteger(date("ymdhis")),
+            "uuid"=>Uuid::fromString(date("ymdhis")),
             "status"=>'paid',
             "date"=>date("Y-m-d h:i:s")
         ]);
