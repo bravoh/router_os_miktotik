@@ -8,6 +8,7 @@ use App\Lib\TransactionRepository;
 use App\Subscription;
 use App\Transaction;
 use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Uuid;
 
 class C2bConfirmationEventListener
 {
@@ -77,11 +78,13 @@ class C2bConfirmationEventListener
 
         $this->MIKROTIK->queue($data);
 
+        $uuid = Uuid::uuid4();
         Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
             "customer_id"=>$customer->id,
             "plan"=>$rate['name'],
             'valid_from'=>date('Y-m-d h:i:s'),
-            'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days"))
+            'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days")),
+            "uuid"=>$uuid->toString()
         ]);
         Log::info(json_encode($data));
     }
