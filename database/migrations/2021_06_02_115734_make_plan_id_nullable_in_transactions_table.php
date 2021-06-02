@@ -15,7 +15,7 @@ class MakePlanIdNullableInTransactionsTable extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->string('uuid')->unique()->after('date');
-            $table->dropForeign('transactions_plan_id_foreign');
+            //$table->dropForeign('transactions_plan_id_foreign');
             $table->dropColumn('ssid','plan_name','plan_id');
         });
     }
