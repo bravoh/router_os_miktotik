@@ -4,6 +4,9 @@ namespace App\Listeners;
 
 use App\Customer;
 use App\Lib\MikrotikAPIClass;
+use App\Lib\TransactionRepository;
+use App\Subscription;
+use App\Transaction;
 use Illuminate\Support\Facades\Log;
 
 class C2bConfirmationEventListener
@@ -38,7 +41,7 @@ class C2bConfirmationEventListener
                 'limit-at'=>"5M/5M"
             ),
             '5000' => array(
-                "name"=>"10mbs",
+                "name"=>"10mbps",
                 'max-limit'=>"10M/10M",
                 'limit-at'=>"10M/10M"
             )
@@ -60,18 +63,26 @@ class C2bConfirmationEventListener
 
         //$service = $customer->active_plan();
         //$plan = $service->plan;
-        $rate = $this->rates[$transaction->TransAmount];
+        $Trx = new TransactionRepository($transaction,$customer);
+        $Trx = $Trx->store();
 
+        $rate = $this->rates[$transaction->TransAmount];
         $data = array (
             "name" => $customer->name,
             "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
             "max-limit" => $rate['max-limit'],
             "limit-at" => $rate['limit-at'],
-            "comment" => "Acc No ".$customer->customer_no." mpesa automatic plan update"
+            "comment" =>  "Mpesa automatic plan update"
         );
 
         $this->MIKROTIK->queue($data);
-        //Log::alert('New Callback Received '.json_encode($transaction));
+
+        Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
+            "customer_id"=>$customer->id,
+            "plan"=>$rate['name'],
+            'valid_from'=>date('Y-m-d h:i:s'),
+            'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days"))
+        ]);
         Log::info(json_encode($data));
     }
 }
