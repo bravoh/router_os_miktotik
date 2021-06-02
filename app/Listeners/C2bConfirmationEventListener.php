@@ -64,11 +64,12 @@ class C2bConfirmationEventListener
 
         $data = array (
             "name" => $customer->name,
-            "target" => "192.139.137.".$customer->id,
+            "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
             "max-limit" => $rate['max-limit'],
             "limit-at" => $rate['limit-at'],
             "comment" => "Acc No ".$customer->customer_no." mpesa automatic plan update"
         );
+
         $this->MIKROTIK->queue($data);
         //Log::alert('New Callback Received '.json_encode($transaction));
         Log::info(json_encode($data));
