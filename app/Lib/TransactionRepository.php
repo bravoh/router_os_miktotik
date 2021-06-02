@@ -29,6 +29,7 @@ class TransactionRepository
     }
 
     public function store(){
+        $uuid = Uuid::uuid4();
         $trx = Transaction::updateOrCreate(['trx_code'=>$this->callback->BillRefNumber],[
             "amount"=>$this->callback->TransAmount,
             "mode"=>"mpesa",
@@ -36,7 +37,7 @@ class TransactionRepository
             "trx_code"=>$this->callback->TransID,
             "customer_id"=>$this->customer->id,
             "customer_name"=>$this->customer->name,
-            "uuid"=>Uuid::fromString(date("ymdhis")),
+            "uuid"=>$uuid->toString(),
             "status"=>'paid',
             "date"=>date("Y-m-d h:i:s")
         ]);
