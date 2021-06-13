@@ -21,20 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Lib/TransactionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/TransactionRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/router_os.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/router_os.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_22_090254_create_customers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_22_090254_create_customers_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_27_192753_create_transactions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_27_192753_create_transactions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_29_171534_add_default_target_ip_to_customers_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_29_175804_create_subscriptions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_29_175804_create_subscriptions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_115734_make_plan_id_nullable_in_transactions_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_132836_add_valid_from_to_subscriptions_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_143051_add_status_to_subscriptions_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +42,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -261,7 +257,7 @@
       <workItem from="1623351020017" duration="865000" />
       <workItem from="1623519237405" duration="775000" />
       <workItem from="1623520376973" duration="21000" />
-      <workItem from="1623589236017" duration="3754000" />
+      <workItem from="1623589236017" duration="8458000" />
     </task>
     <servers />
   </component>
