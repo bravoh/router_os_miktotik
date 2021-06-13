@@ -30,6 +30,7 @@ class TransactionRepository
 
     public function store(){
         $uuid = Uuid::uuid4();
+
         $trx = Transaction::updateOrCreate(['trx_code'=>$this->callback->BillRefNumber],[
             "amount"=>$this->callback->TransAmount,
             "mode"=>"mpesa",
@@ -41,6 +42,16 @@ class TransactionRepository
             "status"=>'paid',
             "date"=>date("Y-m-d h:i:s")
         ]);
+
+        $running_subscription = Subscription::whereDate('valid_until', '>=', date('Y-m-d'))
+            ->whereStatus('up')
+            ->where('customer_id',$this->customer->id)
+            ->get();
+
+        if (count($running_subscription)){
+            $trx->status = 'voucher';
+            $trx->save();
+        }
 
         return $trx;
     }

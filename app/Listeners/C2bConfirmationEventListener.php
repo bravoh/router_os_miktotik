@@ -24,29 +24,7 @@ class C2bConfirmationEventListener
     public function __construct()
     {
         $this->MIKROTIK = new MikrotikAPIClass();
-
-        $this->rates = array(
-            '1.00' => array(
-                'name'=>"3mbps",
-                'max-limit'=>"3M/3M",
-                'limit-at'=>"3M/3M"
-            ),
-            '1500.00' => array(
-                'name'=>"3mbps",
-                'max-limit'=>"3M/3M",
-                'limit-at'=>"3M/3M"
-            ),
-            '2500.00' => array(
-                'name'=>"5mbps",
-                'max-limit'=>"5M/5M",
-                'limit-at'=>"5M/5M"
-            ),
-            '5000' => array(
-                "name"=>"10mbps",
-                'max-limit'=>"10M/10M",
-                'limit-at'=>"10M/10M"
-            )
-        );
+        $this->rates = config('router_os.rates');
     }
 
     /**
@@ -62,30 +40,40 @@ class C2bConfirmationEventListener
             ->orWhere('phone',$transaction->BillRefNumber)
             ->first();
 
-        //$service = $customer->active_plan();
-        //$plan = $service->plan;
-        $Trx = new TransactionRepository($transaction,$customer);
-        $Trx = $Trx->store();
-
-        $rate = $this->rates[$transaction->TransAmount];
-        $data = array (
-            "name" => $customer->name,
-            "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
-            "max-limit" => $rate['max-limit'],
-            "limit-at" => $rate['limit-at'],
-            "comment" =>  "Mpesa automatic plan update"
+        $Trx = new TransactionRepository(
+            $transaction,
+            $customer
         );
 
-        $this->MIKROTIK->queue($data);
+        $Trx = $Trx->store();
 
-        $uuid = Uuid::uuid4();
-        Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
-            "customer_id"=>$customer->id,
-            "plan"=>$rate['name'],
-            'valid_from'=>date('Y-m-d h:i:s'),
-            'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days")),
-            "uuid"=>$uuid->toString()
-        ]);
-        Log::info(json_encode($data));
+        if ($Trx->status !== "voucher"){
+            $rate = $this->rates[
+                $transaction->TransAmount
+            ];
+
+            $data = array (
+                "name" => $customer->name,
+                "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
+                "max-limit" => $rate['max-limit'],
+                "limit-at" => $rate['limit-at'],
+                "comment" =>  "Mpesa automatic plan update"
+            );
+
+            $this->MIKROTIK->queue($data);
+
+            $uuid = Uuid::uuid4();
+
+            Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
+                "customer_id"=>$customer->id,
+                "plan"=>$rate['name'],
+                'valid_from'=>date('Y-m-d h:i:s'),
+                'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days")),
+                "uuid"=>$uuid->toString()
+            ]);
+
+            Log::info(json_encode($data));
+        }
+
     }
 }

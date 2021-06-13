@@ -21,8 +21,20 @@
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Lib/TransactionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/TransactionRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/router_os.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/router_os.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_22_090254_create_customers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_22_090254_create_customers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_27_192753_create_transactions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_01_27_192753_create_transactions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_29_171534_add_default_target_ip_to_customers_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_29_175804_create_subscriptions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_29_175804_create_subscriptions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_115734_make_plan_id_nullable_in_transactions_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_132836_add_valid_from_to_subscriptions_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_06_02_143051_add_status_to_subscriptions_table.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,9 +170,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="PHPT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/planuser" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../cleaner-app" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -169,6 +182,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -241,6 +255,13 @@
       <workItem from="1622440593840" duration="614000" />
       <workItem from="1622489706028" duration="805000" />
       <workItem from="1622613161416" duration="13025000" />
+      <workItem from="1622992137202" duration="7456000" />
+      <workItem from="1623001572913" duration="3641000" />
+      <workItem from="1623072039032" duration="74000" />
+      <workItem from="1623351020017" duration="865000" />
+      <workItem from="1623519237405" duration="775000" />
+      <workItem from="1623520376973" duration="21000" />
+      <workItem from="1623589236017" duration="3754000" />
     </task>
     <servers />
   </component>
@@ -258,23 +279,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="764" y="244" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1622644455556">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="764" y="244" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1622644455556" />
-    <state x="708" y="278" width="494" height="560" key="NewPhpClassDialog" timestamp="1622490048497">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="708" y="278" width="494" height="560" key="NewPhpClassDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1622490048497" />
-    <state x="100" y="130" width="1720" height="850" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1622309014016">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="100" y="130" width="1720" height="850" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1622309014016" />
-    <state x="668" y="299" width="583" height="512" key="find.popup" timestamp="1622030798631">
-      <screen x="0" y="30" width="1920" height="1050" />
-    </state>
-    <state x="668" y="299" width="583" height="512" key="find.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1622030798631" />
   </component>
 </project>

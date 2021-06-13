@@ -16,7 +16,8 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "pear2/net_routeros": "^1.0@beta",
-        "samerior/mobile-money": "^2.2"
+        "samerior/mobile-money": "^2.2",
+        "tcg/voyager": "^1.4"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

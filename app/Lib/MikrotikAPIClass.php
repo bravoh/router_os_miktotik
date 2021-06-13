@@ -3,6 +3,7 @@
 
 namespace App\Lib;
 
+use Illuminate\Support\Facades\Log;
 use RouterOS\Query;
 use RouterOS\Config;
 use RouterOS\Client;
@@ -28,7 +29,11 @@ class MikrotikAPIClass
             'port' => intval(config('router_os.port')),
         ]);
 
-        $this->client = new Client($config);
+        try {
+            $this->client = new Client($config);
+        }catch (\Exception $exception){
+            Log::error($exception);
+        }
     }
 
     /**
@@ -134,7 +139,38 @@ class MikrotikAPIClass
      */
     public function removeQueued($data){
         $ARRAY = $this->searchQueueBy($data['name']);
-        $query = (new Query('/queue/simple/remove'))->equal('.id', $ARRAY[0]['.id']);
+
+        if(count($ARRAY)){
+            $query = (new Query('/queue/simple/remove'))->equal('.id', $ARRAY[0]['.id']);
+            return $this->client->query($query)->read();
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $data
+     * @throws \RouterOS\Exceptions\ClientException
+     * @throws \RouterOS\Exceptions\ConfigException
+     * @throws \RouterOS\Exceptions\QueryException
+     */
+    public function addToFirewall($data){
+        //$ARRAY = $this->searchQueueBy($data['name']);
+        $query = (new Query("/ip/firewall/address-list/add"))
+            ->equal("list","test")
+            ->equal("comment","test")
+            ->equal("address","192.168.2.33");
+
         return $this->client->query($query)->read();
+    }
+
+    /**
+     * @throws \RouterOS\Exceptions\ClientException
+     * @throws \RouterOS\Exceptions\ConfigException
+     * @throws \RouterOS\Exceptions\QueryException
+     */
+    public function readInFirewall(){
+        $query = (new Query("/ip/firewall/address-list/getall"));
+        dd($this->client->query($query)->read());
     }
 }

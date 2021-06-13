@@ -22,23 +22,12 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->string('customer_name');
             $table->unsignedBigInteger('plan_id');
-            $table->string('plan_name');
-            $table->string('ssid');
             $table->string('status')->nullable()->default('completed');
             $table->dateTime('date');
+            $table->string('uuid')->unique();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-
-            $table->foreign('customer_id')
-                ->references('id')
-                ->on('customers')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-
-            $table->foreign('plan_id')
-                ->references('id')
-                ->on('plans')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
         });
     }
 

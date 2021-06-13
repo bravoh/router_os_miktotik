@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->MIKROTIK = new MikrotikAPIClass();
+        //$this->MIKROTIK = new MikrotikAPIClass();
         $this->middleware('auth');
     }
 
