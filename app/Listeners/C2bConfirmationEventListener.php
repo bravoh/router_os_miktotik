@@ -57,7 +57,7 @@ class C2bConfirmationEventListener
                 "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
                 "max-limit" => $rate['max-limit'],
                 "limit-at" => $rate['limit-at'],
-                "comment" =>  "Mpesa automatic plan update"
+                "comment" =>  @$transaction->TransID." Mpesa automatic plan update"
             );
 
             $this->MIKROTIK->queue($data);
@@ -71,7 +71,7 @@ class C2bConfirmationEventListener
                 'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days")),
                 "uuid"=>$uuid->toString()
             ]);
-
+            Log::alert('New Callback Received '.json_encode($transaction));
             Log::info(json_encode($data));
         }
 
