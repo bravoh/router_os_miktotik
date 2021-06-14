@@ -22,7 +22,7 @@
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
-                                    <th>Account Number</th>
+{{--                                    <th>Account Number</th>--}}
                                     <th>IP</th>
                                 </tr>
                             </thead>
@@ -33,7 +33,7 @@
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->phone}}</td>
                                 <td>{{$item->email}}</td>
-                                <td>{{$item->customer_no}}</td>
+{{--                                <td>{{$item->phone}}</td>--}}
                                 <td>{{$item->default_target_ip}}</td>
                             </tr>
                             @endforeach

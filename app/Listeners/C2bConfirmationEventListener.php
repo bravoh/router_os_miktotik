@@ -57,7 +57,7 @@ class C2bConfirmationEventListener
                 "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
                 "max-limit" => $rate['max-limit'],
                 "limit-at" => $rate['limit-at'],
-                "comment" =>  @$transaction->TransID." Mpesa automatic plan update"
+                "comment" =>  @$transaction->MSISDN." ".@$transaction->TransID." M-Pesa automatic plan update"
             );
 
             $this->MIKROTIK->queue($data);
