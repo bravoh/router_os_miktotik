@@ -48,6 +48,7 @@ class MikrotikWorker extends Command
             ->get();
 
         $RouterClass = new MikrotikAPIClass();
+        //var_dump($RouterClass);
         foreach ($items as $item){
             try {
                 $RouterClass->removeQueued(array(
@@ -70,16 +71,16 @@ class MikrotikWorker extends Command
     public function processPendingVoucher($customer,$MIKROTIK){
         $Trx = Transaction::where('customer_id',$customer->id)
             ->whereStatus('voucher')
-            ->last();
-
-        if (count($Trx)){
+            ->orderBy('id','desc')
+            ->first();
+           
+        if (!empty($Trx)){
             $rates = config('router_os.rates');
-
             $rate = $rates[$Trx->amount];
 
             $data = array (
                 "name" => $customer->name,
-                "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
+                "target" => $customer->default_target_ip,
                 "max-limit" => $rate['max-limit'],
                 "limit-at" => $rate['limit-at'],
                 "comment" =>  "Mpesa automatic plan update"
