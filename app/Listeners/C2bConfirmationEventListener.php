@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Customer;
 use App\Lib\MikrotikAPIClass;
 use App\Lib\TransactionRepository;
+use App\Repositories\SMSRepository;
 use App\Subscription;
 use App\Transaction;
 use Illuminate\Support\Facades\Log;
@@ -73,7 +74,18 @@ class C2bConfirmationEventListener
             ]);
             Log::alert('New Callback Received '.json_encode($transaction));
             Log::info(json_encode($data));
+
+            $this->thankYouSms($customer,$transaction);
         }
 
+    }
+
+    public function thankYouSms($customer,$trx){
+        $message = config('sms.templates.acknowledgement');
+        $message = str_replace('{name}',$customer->name,$message);
+        $message = str_replace('{amount}',$trx->TransAmount,$message);
+
+        $MessageService = new SMSRepository();
+        $MessageService->send($customer->phone,$message);
     }
 }

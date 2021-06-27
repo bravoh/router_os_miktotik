@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingsTable extends Migration
+class AddReminderCollumnsToSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('value');
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->dateTime('reminded_at')->nullable();
         });
     }
 
@@ -27,6 +25,8 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->dropColumn('reminded_at');
+        });
     }
 }

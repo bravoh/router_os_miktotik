@@ -60,3 +60,8 @@ Route::group(['prefix'=>'prepaid','as'=>'prepaid.'],function (){
     Route::match(['post'],'/delete','PrepaidController@delete')->name('delete');
 });
 
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
