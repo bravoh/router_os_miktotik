@@ -72,9 +72,9 @@ class C2bConfirmationEventListener
                 "uuid"=>$uuid->toString()
             ]);
             Log::alert('New Callback Received '.json_encode($transaction));
-            $this->thankYouSms($customer,$transaction);
         }
-
+        //Acknowledge receipt of payment
+        $this->thankYouSms($customer,$transaction);
     }
 
     public function thankYouSms($customer,$trx){
