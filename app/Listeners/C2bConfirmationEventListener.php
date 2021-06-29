@@ -62,7 +62,6 @@ class C2bConfirmationEventListener
             );
 
             $this->MIKROTIK->queue($data);
-
             $uuid = Uuid::uuid4();
 
             Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
@@ -73,19 +72,21 @@ class C2bConfirmationEventListener
                 "uuid"=>$uuid->toString()
             ]);
             Log::alert('New Callback Received '.json_encode($transaction));
-            Log::info(json_encode($data));
-
             $this->thankYouSms($customer,$transaction);
         }
 
     }
 
     public function thankYouSms($customer,$trx){
+        $name = $customer->name;
+        $name = explode(' ',$name)[0];
         $message = config('sms.templates.acknowledgement');
-        $message = str_replace('{name}',$customer->name,$message);
+        $message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$trx->TransAmount,$message);
 
         $MessageService = new SMSRepository();
-        $MessageService->send($customer->phone,$message);
+        $resp = $MessageService->send($customer->phone,$message);
+        $MessageService->saveSmsResponse($resp,$message);
+        Log::info($resp);
     }
 }

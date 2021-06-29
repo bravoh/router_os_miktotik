@@ -20,19 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config/sms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/isp-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/isp-app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/C2bConfirmationEventListener.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Repositories/SMSInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SMSInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/SMSRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SMSRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_01_22_110934_create_settings_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +271,8 @@
       <workItem from="1623589236017" duration="8458000" />
       <workItem from="1623676881175" duration="4309000" />
       <workItem from="1624635212279" duration="1839000" />
-      <workItem from="1624806662358" duration="17749000" />
+      <workItem from="1624806662358" duration="18658000" />
+      <workItem from="1624986656525" duration="3964000" />
     </task>
     <servers />
   </component>
