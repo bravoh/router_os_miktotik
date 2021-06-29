@@ -22,14 +22,16 @@ class MikrotikAPIClass
      */
     public function __construct()
     {
-        $config = new Config([
-            'host' => config('router_os.server'),
-            'user' => config('router_os.user'),
-            'pass' => config('router_os.password'),
-            'port' => intval(config('router_os.port')),
-        ]);
-
         try {
+            $config = new Config([
+                'host' => config('router_os.server'),
+                'user' => config('router_os.user'),
+                'pass' => config('router_os.password'),
+                'port' => intval(config('router_os.port')),
+                'timeout' => 5,
+                'attempts' => 1
+            ]);
+
             $this->client = new Client($config);
         }catch (\Exception $exception){
             Log::error($exception);
