@@ -26,7 +26,7 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <label for="phone" class="form-label">Phone Number (Optional)</label>
+                                    <label for="phone" class="form-label">Phone Number (Compulsory)</label>
                                     <input type="text" name="phone" class="form-control" id="phone" placeholder="" value="" required="">
                                     <div class="invalid-feedback">
                                         Valid last name is required.
