@@ -84,6 +84,7 @@ class C2bConfirmationEventListener
         $message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$trx->TransAmount,$message);
 
+        Log::info($message);
         $MessageService = new SMSRepository();
         $resp = $MessageService->send($customer->phone,$message);
         $MessageService->saveSmsResponse($resp,$message);
