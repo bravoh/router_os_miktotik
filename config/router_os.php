@@ -52,6 +52,12 @@ return [
             'limit-at'=>"5M/5M",
             'type'=>'live'
         ),
+        '3500.00' => array(
+            'name'=>"8mbps",
+            'max-limit'=>"8M/8M",
+            'limit-at'=>"8M/8M",
+            'type'=>'live'
+        ),
         '4000' => array(
             "name"=>"10mbps",
             'max-limit'=>"10M/10M",
