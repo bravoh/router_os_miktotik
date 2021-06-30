@@ -28,8 +28,20 @@ Route::group(['prefix'=>'mikrotik','as'=>'mikrotik.'],function (){
 Route::group(['prefix'=>'customers','as'=>'customers.'],function (){
     Route::match(['get'],'/','CustomerController@index')->name('index');
     Route::match(['post','get'],'/create','CustomerController@create')->name('create');
-    Route::match(['post','get'],'/{id}/edit','CustomerController@edit')->name('edit');
-    Route::match(['post'],'/delete','CustomerController@delete')->name('delete');
+    Route::match(['post','get'],'/edit/{id}','CustomerController@edit')->name('edit');
+    Route::match(['post','get'],'/delete/{id}','CustomerController@delete')->name('delete');
+});
+Route::group(['prefix'=>'transactions','as'=>'transactions.'],function (){
+    Route::match(['get'],'/','TransactionController@index')->name('index');
+    
+});
+Route::group(['prefix'=>'subscriptions','as'=>'subscriptions.'],function (){
+    Route::match(['get'],'/','SubscriptionController@index')->name('index');
+    
+});
+Route::group(['prefix'=>'sms','as'=>'sms.'],function (){
+    Route::match(['get'],'/','SmsController@index')->name('index');
+    
 });
 
 Route::group(['prefix'=>'plans','as'=>'plans.'],function (){
