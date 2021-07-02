@@ -33,15 +33,15 @@ Route::group(['prefix'=>'customers','as'=>'customers.'],function (){
 });
 Route::group(['prefix'=>'transactions','as'=>'transactions.'],function (){
     Route::match(['get'],'/','TransactionController@index')->name('index');
-    
+
 });
 Route::group(['prefix'=>'subscriptions','as'=>'subscriptions.'],function (){
     Route::match(['get'],'/','SubscriptionController@index')->name('index');
-    
+
 });
 Route::group(['prefix'=>'sms','as'=>'sms.'],function (){
     Route::match(['get'],'/','SmsController@index')->name('index');
-    
+
 });
 
 Route::group(['prefix'=>'plans','as'=>'plans.'],function (){
@@ -74,6 +74,6 @@ Route::group(['prefix'=>'prepaid','as'=>'prepaid.'],function (){
 
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => '/'], function () {
     Voyager::routes();
 });
