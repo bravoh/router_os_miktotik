@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use AfricasTalking\SDK\AfricasTalking;
+use App\Customer;
 use App\Repositories\SMSRepository;
 use App\Subscription;
 use Carbon\Carbon;
@@ -55,10 +56,10 @@ class SmsReminder extends Command
     }
 
     public function testRunner(){
-        $name = "Brav";
+        //$name = "Brav";
         $TransAmount = 100.00;
         $message = config('sms.templates.acknowledgement');
-        $message = str_replace('{name}',$name,$message);
+        //$message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$TransAmount,$message);
 
         $resp = $this->messenger->send("0718784058",$message);
@@ -70,19 +71,17 @@ class SmsReminder extends Command
         $in3days = date("Y-m-d", strtotime($currentDate. ' + 3 days'));
 
         echo "Processing records expiring on: ".$in3days."\n";
-        $expiringIn3Days = Subscription::whereDate('valid_until',$in3days)
+        $items = Subscription::whereDate('valid_until',$in3days)
             ->whereNull('reminded_at')
             ->get();
         $message = config('sms.templates.three_days_to');
-        foreach ($expiringIn3Days as $subscription){
-            //DB::transaction(function ()use($subscription,$message){
-                $message = str_replace('{name}',$subscription->customer->name,$message);
-                $resp = $this->messenger->send($subscription->customer->phone,$message);
-                $this->messenger->saveSmsResponse($resp,$message);
+        foreach ($items as $item){
+            $customer = Customer::find($item->customer_id);
+            $resp = $this->messenger->send($customer->phone,$message);
+            $this->messenger->saveSmsResponse($resp,$message,$customer);
 
-                $subscription->reminded_at = date('Y-m-d h:i:s');
-                $subscription->save();
-            //});
+            $item->reminded_at = date('Y-m-d h:i:s');
+            $item->save();
         }
     }
 
@@ -92,17 +91,17 @@ class SmsReminder extends Command
             ->whereNull('reminded_at')
             ->get();
         $message = config('sms.templates.three_days_to');
-        foreach ($expiringToday as $subscription){
-            //DB::transaction(function ()use ($subscription,$message){
-                $time =  date('h:i A', strtotime($subscription->valid_until));
-                $message = str_replace('{name}',$subscription->customer->name,$message);
-                $message = str_replace('{time}',$time,$message);
-                $resp = $this->messenger->send($subscription->customer->phone,$message);
-                $this->messenger->saveSmsResponse($resp,$message);
 
-                $subscription->reminded_at = date('Y-m-d h:i:s');
-                $subscription->save();
-            //});
+        foreach ($expiringToday as $subscription){
+            $customer = Customer::find($subscription->customer_id);
+            $time =  date('h:i A', strtotime($subscription->valid_until));
+            $message = str_replace('{time}',$time,$message);
+
+            $resp = $this->messenger->send($customer->phone,$message);
+            $this->messenger->saveSmsResponse($resp,$message,$customer);
+
+            $subscription->reminded_at = date('Y-m-d h:i:s');
+            $subscription->save();
         }
     }
 
@@ -115,14 +114,12 @@ class SmsReminder extends Command
         $message = config('sms.templates.expired_yesterday');
 
         foreach ($expiredYesterday as $subscription){
-            //DB::transaction(function ()use ($subscription,$message){
-                $message = str_replace('{name}',$subscription->customer->name,$message);
-                $resp = $this->messenger->send($subscription->customer->phone,$message);
-                $this->messenger->saveSmsResponse($resp,$message);
+            $customer = Customer::find($subscription->customer_id);
+            $resp = $this->messenger->send($customer->phone,$message);
+            $this->messenger->saveSmsResponse($resp,$message,$customer);
 
-                $subscription->reminded_at = date('Y-m-d h:i:s');
-                $subscription->save();
-            //});
+            $subscription->reminded_at = date('Y-m-d h:i:s');
+            $subscription->save();
         }
     }
 }

@@ -64,7 +64,7 @@ class SMSRepository implements SMSInterface
         $data = (object)$resp->data->SMSMessageData->Recipients[0];
         Sms::create([
             'messageId'=>$data->messageId,
-            'customer_id'=>@$customer->id,
+            'customer_id'=>$customer->id,
             'recipient'=>$data->number,
             'message'=>$message,
             'messageParts'=>$data->messageParts,
