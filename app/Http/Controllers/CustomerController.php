@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Customer;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -36,5 +37,14 @@ class CustomerController extends Controller
     public function generateCustomerNo($customer){
         $customer->customer_no = date('Y').sprintf("%03d",$customer->id);
         $customer->save();
+    }
+    public function edit($id = null){
+        $customersInfo = DB::table('customers')->find($id);
+        return view('customer.edit',compact('customersInfo'));
+    }
+    
+    public function delete($id = null){
+        DB::table('customers')->delete($id);
+        return redirect(route('customers.index')); 
     }
 }
