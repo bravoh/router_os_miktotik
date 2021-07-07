@@ -90,7 +90,7 @@ class SmsReminder extends Command
         $expiringToday = Subscription::whereDate('valid_until',Carbon::today())
             ->whereNull('reminded_at')
             ->get();
-        $message = config('sms.templates.three_days_to');
+        $message = config('sms.templates.on_expiry_date');
 
         foreach ($expiringToday as $subscription){
             $customer = Customer::find($subscription->customer_id);
