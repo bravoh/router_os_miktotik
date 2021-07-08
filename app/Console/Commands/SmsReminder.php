@@ -68,7 +68,6 @@ class SmsReminder extends Command
     public function threeDayRunner(){
         $currentDate = date('Y-m-d');
         $in3days = date("Y-m-d", strtotime($currentDate. ' + 3 days'));
-
         echo "Processing records expiring on: ".$in3days."\n";
         $items = Subscription::whereDate('valid_until',$in3days)->get();
         $message = config('sms.templates.three_days_to');
