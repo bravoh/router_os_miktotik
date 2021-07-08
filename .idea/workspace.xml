@@ -20,10 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/lang/en/theme.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/voyager.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/voyager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SmsReminder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SmsReminder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +272,8 @@
       <workItem from="1624635212279" duration="1839000" />
       <workItem from="1624806662358" duration="18658000" />
       <workItem from="1624986656525" duration="12104000" />
-      <workItem from="1625233716628" duration="8974000" />
+      <workItem from="1625233716628" duration="10410000" />
+      <workItem from="1625588189867" duration="2985000" />
     </task>
     <servers />
   </component>

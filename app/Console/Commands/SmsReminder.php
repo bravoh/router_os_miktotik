@@ -61,7 +61,6 @@ class SmsReminder extends Command
         $message = config('sms.templates.acknowledgement');
         //$message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$TransAmount,$message);
-
         $resp = $this->messenger->send("0718784058",$message);
         $this->messenger->saveSmsResponse($resp,$message);
     }
@@ -71,55 +70,48 @@ class SmsReminder extends Command
         $in3days = date("Y-m-d", strtotime($currentDate. ' + 3 days'));
 
         echo "Processing records expiring on: ".$in3days."\n";
-        $items = Subscription::whereDate('valid_until',$in3days)
-            ->whereNull('reminded_at')
-            ->get();
+        $items = Subscription::whereDate('valid_until',$in3days)->get();
         $message = config('sms.templates.three_days_to');
         foreach ($items as $item){
             $customer = Customer::find($item->customer_id);
             $resp = $this->messenger->send($customer->phone,$message);
             $this->messenger->saveSmsResponse($resp,$message,$customer);
-
             $item->reminded_at = date('Y-m-d h:i:s');
             $item->save();
         }
+
     }
 
     public function todayRunner(){
         echo "Processing records expiring today \n";
-        $expiringToday = Subscription::whereDate('valid_until',Carbon::today())
-            ->whereNull('reminded_at')
-            ->get();
-        $message = config('sms.templates.three_days_to');
+        $expiringToday = Subscription::whereDate('valid_until',date('Y-m-d'))->get();
+        $message = config('sms.templates.on_expiry_date');
 
         foreach ($expiringToday as $subscription){
             $customer = Customer::find($subscription->customer_id);
             $time =  date('h:i A', strtotime($subscription->valid_until));
             $message = str_replace('{time}',$time,$message);
-
             $resp = $this->messenger->send($customer->phone,$message);
             $this->messenger->saveSmsResponse($resp,$message,$customer);
-
             $subscription->reminded_at = date('Y-m-d h:i:s');
             $subscription->save();
         }
+
     }
 
     public function yesterdayRunner(){
         $yesterday = date("Y-m-d", strtotime("yesterday"));
         echo "Processing records that expired yesterday: ".$yesterday."\n";
-        $expiredYesterday = Subscription::whereDate('valid_until',$yesterday)
-            ->whereNull('reminded_at')
-            ->get();
+        $expiredYesterday = Subscription::whereDate('valid_until',$yesterday)->get();
         $message = config('sms.templates.expired_yesterday');
 
         foreach ($expiredYesterday as $subscription){
             $customer = Customer::find($subscription->customer_id);
             $resp = $this->messenger->send($customer->phone,$message);
             $this->messenger->saveSmsResponse($resp,$message,$customer);
-
             $subscription->reminded_at = date('Y-m-d h:i:s');
             $subscription->save();
         }
+
     }
 }
