@@ -111,9 +111,7 @@ class MikrotikAPIClass
      */
     public function enableQueued($data){
         $ARRAY = $this->searchQueueBy($data['name']);
-        $query = (new Query('/queue/simple/enable'))
-            ->equal('.id', $ARRAY[0]['.id']);
-
+        $query = (new Query('/queue/simple/enable'))->equal('.id', $ARRAY[0]['.id']);
         return $this->client->query($query)->read();
     }
 

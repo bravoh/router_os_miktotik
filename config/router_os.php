@@ -1,15 +1,19 @@
 <?php
 return [
-
     /**
      * Mikrotik Configuration
      */
-
     'server'=>env('ROUTER_OS_SERVER'),
     'user'=>env('ROUTER_OS_USER'),
     'password'=>env('ROUTER_OS_PASSWORD'),
     'port'=>env('ROUTER_OS_PORT',8728),
     'rates'=>array(
+        '0.00' => array(
+            'name'=>"0mbps",
+            'max-limit'=>"0M/0M",
+            'limit-at'=>"0M/0M",
+            'type'=>'downed'
+        ),
         '1.00' => array(
             'name'=>"3mbps",
             'max-limit'=>"3M/3M",

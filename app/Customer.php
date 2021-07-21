@@ -15,4 +15,8 @@ class Customer extends Model
     public function active_plan(){
         return $this->plans()->latest()->first();
     }
+
+    public function subscriptions(){
+        return $this->hasMany(Subscription::class);
+    }
 }

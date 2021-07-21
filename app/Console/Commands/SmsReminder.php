@@ -50,9 +50,9 @@ class SmsReminder extends Command
     public function handle()
     {
         //$this->testRunner();
-        $this->threeDayRunner();
-        $this->todayRunner();
-        $this->yesterdayRunner();
+        $this->threeDayRunner();//1
+        $this->todayRunner();//2
+        $this->yesterdayRunner();//3
     }
 
     public function testRunner(){
@@ -65,7 +65,7 @@ class SmsReminder extends Command
         $this->messenger->saveSmsResponse($resp,$message);
     }
 
-    public function threeDayRunner(){
+    public function threeDayRunner(){//Reminder Status 1
         $currentDate = date('Y-m-d');
         $in3days = date("Y-m-d", strtotime($currentDate. ' + 3 days'));
         echo "Processing records expiring on: ".$in3days."\n";
@@ -73,32 +73,40 @@ class SmsReminder extends Command
         $message = config('sms.templates.three_days_to');
         foreach ($items as $item){
             $customer = Customer::find($item->customer_id);
-            $resp = $this->messenger->send($customer->phone,$message);
-            $this->messenger->saveSmsResponse($resp,$message,$customer);
-            $item->reminded_at = date('Y-m-d h:i:s');
-            $item->save();
+            $last_subscription = $customer->subscriptions->last();
+            if ($last_subscription->status !== "up"){
+                $resp = $this->messenger->send($customer->phone,$message);
+                $this->messenger->saveSmsResponse($resp,$message,$customer);
+                $item->reminded_at = date('Y-m-d h:i:s');
+                $item->remind_status = 1;
+                $item->save();
+            }
         }
 
     }
 
-    public function todayRunner(){
+    public function todayRunner(){//Reminder Status 2
         echo "Processing records expiring today \n";
         $expiringToday = Subscription::whereDate('valid_until',date('Y-m-d'))->get();
         $message = config('sms.templates.on_expiry_date');
 
         foreach ($expiringToday as $subscription){
             $customer = Customer::find($subscription->customer_id);
-            $time =  date('h:i A', strtotime($subscription->valid_until));
-            $message = str_replace('{time}',$time,$message);
-            $resp = $this->messenger->send($customer->phone,$message);
-            $this->messenger->saveSmsResponse($resp,$message,$customer);
-            $subscription->reminded_at = date('Y-m-d h:i:s');
-            $subscription->save();
+            $last_subscription = $customer->subscriptions->last();
+            if ($last_subscription->status !== "up"){
+                $time =  date('h:i A', strtotime($subscription->valid_until));
+                $message = str_replace('{time}',$time,$message);
+                $resp = $this->messenger->send($customer->phone,$message);
+                $this->messenger->saveSmsResponse($resp,$message,$customer);
+                $subscription->reminded_at = date('Y-m-d h:i:s');
+                $subscription->remind_status = 2;
+                $subscription->save();
+            }
         }
 
     }
 
-    public function yesterdayRunner(){
+    public function yesterdayRunner(){//Reminder Status 3
         $yesterday = date("Y-m-d", strtotime("yesterday"));
         echo "Processing records that expired yesterday: ".$yesterday."\n";
         $expiredYesterday = Subscription::whereDate('valid_until',$yesterday)->get();
@@ -106,10 +114,14 @@ class SmsReminder extends Command
 
         foreach ($expiredYesterday as $subscription){
             $customer = Customer::find($subscription->customer_id);
-            $resp = $this->messenger->send($customer->phone,$message);
-            $this->messenger->saveSmsResponse($resp,$message,$customer);
-            $subscription->reminded_at = date('Y-m-d h:i:s');
-            $subscription->save();
+            $last_subscription = $customer->subscriptions->last();
+            if ($last_subscription->status !== "up"){
+                $resp = $this->messenger->send($customer->phone,$message);
+                $this->messenger->saveSmsResponse($resp,$message,$customer);
+                $subscription->reminded_at = date('Y-m-d h:i:s');
+                $subscription->remind_status = 3;
+                $subscription->save();
+            }
         }
 
     }

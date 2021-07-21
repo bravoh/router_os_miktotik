@@ -56,6 +56,7 @@ class MikrotikWorker extends Command
                     'target_ip'=>$item->customer->target_ip
                 ));
                 $item->putDown();
+                $this->zeroQueue($item->customer,$RouterClass);
                 $this->processPendingVoucher($item->customer,$RouterClass);
             }catch (\Exception $exception){
 
@@ -73,7 +74,7 @@ class MikrotikWorker extends Command
             ->whereStatus('voucher')
             ->orderBy('id','desc')
             ->first();
-           
+
         if (!empty($Trx)){
             $rates = config('router_os.rates');
             $rate = $rates[$Trx->amount];
@@ -89,7 +90,6 @@ class MikrotikWorker extends Command
             $MIKROTIK->queue($data);
 
             $uuid = Uuid::uuid4();
-
             Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
                 "customer_id"=>$customer->id,
                 "plan"=>$rate['name'],
@@ -103,5 +103,16 @@ class MikrotikWorker extends Command
             $Trx->save();
             Log::info(json_encode($data));
         }
+    }
+
+    public function zeroQueue($customer,$MIKROTIK){
+        $data = array (
+            "name" => $customer->name,
+            "target" => $customer->default_target_ip,
+            "max-limit" => "0M/0M",
+            "limit-at" => "0M/0M",
+            "comment" =>  "Zero Qd"
+        );
+        $MIKROTIK->queue($data);
     }
 }
