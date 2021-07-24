@@ -22,10 +22,7 @@
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/SmsReminder.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/SmsReminder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Customer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Customer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/router_os.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/router_os.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,6 +276,7 @@
       <workItem from="1625233716628" duration="10410000" />
       <workItem from="1625588189867" duration="3970000" />
       <workItem from="1626897382838" duration="3403000" />
+      <workItem from="1627121484887" duration="387000" />
     </task>
     <servers />
   </component>

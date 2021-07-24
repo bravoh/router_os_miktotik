@@ -51,12 +51,12 @@ class MikrotikWorker extends Command
         //var_dump($RouterClass);
         foreach ($items as $item){
             try {
-                $RouterClass->removeQueued(array(
-                    'name'=>$item->customer->name,
-                    'target_ip'=>$item->customer->target_ip
-                ));
-                $item->putDown();
+//                $RouterClass->removeQueued(array(
+//                    'name'=>$item->customer->name,
+//                    'target_ip'=>$item->customer->target_ip
+//                ));
                 $this->zeroQueue($item->customer,$RouterClass);
+                $item->putDown();
                 $this->processPendingVoucher($item->customer,$RouterClass);
             }catch (\Exception $exception){
 

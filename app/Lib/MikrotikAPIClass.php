@@ -46,7 +46,7 @@ class MikrotikAPIClass
      * @throws \RouterOS\Exceptions\QueryException
      */
     public function queue($data) {
-        $ARRAY = $this->searchQueueBy($data['name']);
+        $ARRAY = $this->searchQueueBy($data['target']);
         if (count($ARRAY)>0 )
             return $this->updateInQueue($data,$ARRAY);
         $this->addToQueue($data);
@@ -60,8 +60,9 @@ class MikrotikAPIClass
      * @throws \RouterOS\Exceptions\ConfigException
      * @throws \RouterOS\Exceptions\QueryException
      */
-    public function searchQueueBy($value, $key = 'name'){
-        $query = (new Query('/queue/simple/getall'))->where($key, $value);
+    public function searchQueueBy($value,$key='target'){
+        $query = (new Query('/queue/simple/getall'))
+            ->where($key, $value);
         return $this->client->query($query)->read();
     }
 
@@ -110,7 +111,7 @@ class MikrotikAPIClass
      * @throws \RouterOS\Exceptions\QueryException
      */
     public function enableQueued($data){
-        $ARRAY = $this->searchQueueBy($data['name']);
+        $ARRAY = $this->searchQueueBy($data['target']);
         $query = (new Query('/queue/simple/enable'))->equal('.id', $ARRAY[0]['.id']);
         return $this->client->query($query)->read();
     }
@@ -123,7 +124,7 @@ class MikrotikAPIClass
      * @throws \RouterOS\Exceptions\QueryException
      */
     public function disableQueued($data){
-        $ARRAY = $this->searchQueueBy($data['name']);
+        $ARRAY = $this->searchQueueBy($data['target']);
         $query = (new Query('/queue/simple/disable'))
             ->equal('.id', $ARRAY[0]['.id']);
 
@@ -138,7 +139,7 @@ class MikrotikAPIClass
      * @throws \RouterOS\Exceptions\QueryException
      */
     public function removeQueued($data){
-        $ARRAY = $this->searchQueueBy($data['name']);
+        $ARRAY = $this->searchQueueBy($data['target']);
 
         if(count($ARRAY)){
             $query = (new Query('/queue/simple/remove'))->equal('.id', $ARRAY[0]['.id']);
