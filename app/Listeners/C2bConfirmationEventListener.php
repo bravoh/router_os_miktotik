@@ -41,6 +41,14 @@ class C2bConfirmationEventListener
             ->orWhere('phone',$transaction->BillRefNumber)
             ->first();
 
+        Log::alert('Customer: '.json_encode($customer));
+        try {
+            //Thank you SMS
+            $this->thankYouSms($customer,$transaction);
+        }catch (\Exception $exception){
+
+        }
+
         $Trx = new TransactionRepository(
             $transaction,
             $customer
@@ -73,8 +81,6 @@ class C2bConfirmationEventListener
             ]);
             Log::alert('New Callback Received '.json_encode($transaction));
         }
-        //Acknowledge receipt of payment
-        $this->thankYouSms($customer,$transaction);
     }
 
     public function thankYouSms($customer,$trx){
