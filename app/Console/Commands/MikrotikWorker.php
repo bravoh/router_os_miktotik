@@ -51,11 +51,11 @@ class MikrotikWorker extends Command
         //var_dump($RouterClass);
         foreach ($items as $item){
             try {
-                $RouterClass->removeQueued(array(
-                    'name'=>$item->customer->name,
-                    'target_ip'=>$item->customer->target_ip
-                ));
-                //$this->zeroQueue($item->customer,$RouterClass);
+                //$RouterClass->removeQueued(array(
+                    //'name'=>$item->customer->name,
+                    //'target_ip'=>$item->customer->target_ip
+                //));
+                $this->zeroQueue($item->customer,$RouterClass);
                 $item->putDown();
                 $this->processPendingVoucher($item->customer,$RouterClass);
             }catch (\Exception $exception){
@@ -109,8 +109,8 @@ class MikrotikWorker extends Command
         $data = array (
             "name" => $customer->name,
             "target" => $customer->default_target_ip,
-            "max-limit" => "1M/1M",
-            "limit-at" => "1M/1M",
+            "max-limit" => "Unlimited",
+            "limit-at" => "Unlimited",
             "comment" =>  "Zero Qd"
         );
         Log::alert('Downing Data: '.json_encode($data));
