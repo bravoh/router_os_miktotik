@@ -109,8 +109,8 @@ class MikrotikWorker extends Command
         $data = array (
             "name" => $customer->name,
             "target" => $customer->default_target_ip,
-            "max-limit" => "unlimited",
-            "limit-at" => "unlimited",
+            "max-limit" => "0",
+            "limit-at" => "0",
             "comment" =>  "Zero Qd"
         );
         Log::alert('Downing Data: '.json_encode($data));
