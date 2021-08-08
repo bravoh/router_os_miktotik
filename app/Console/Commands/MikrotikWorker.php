@@ -111,7 +111,7 @@ class MikrotikWorker extends Command
             "target" => $customer->default_target_ip,
             "max-limit" => "0/0",
             "limit-at" => "0/0",
-            "comment" =>  "Zero Qd"
+            "comment" =>  "Downed on: ".date('Y-m-d h:i:s')
         );
         Log::alert('Downing Data: '.json_encode($data));
         $MIKROTIK->queue($data);
