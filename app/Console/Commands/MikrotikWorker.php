@@ -84,7 +84,7 @@ class MikrotikWorker extends Command
                 "target" => $customer->default_target_ip,
                 "max-limit" => $rate['max-limit'],
                 "limit-at" => $rate['limit-at'],
-                "comment" =>  "Mpesa automatic plan update"
+                "comment" =>  "KES ".$Trx->amount." voucher automatic processed"
             );
 
             $MIKROTIK->queue($data);

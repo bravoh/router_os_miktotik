@@ -105,7 +105,6 @@
       <path value="$PROJECT_DIR$/vendor/evilfreelancer/routeros-api-php" />
       <path value="$PROJECT_DIR$/vendor/divineomega/php-ssh-connection" />
       <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
-      <path value="$PROJECT_DIR$/vendor/tcg/voyager" />
       <path value="$PROJECT_DIR$/vendor/intervention/image" />
       <path value="$PROJECT_DIR$/vendor/react/promise" />
       <path value="$PROJECT_DIR$/vendor/seld/jsonlint" />

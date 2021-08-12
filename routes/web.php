@@ -22,7 +22,7 @@ Route::get('/sandbox', 'HomeController@sandbox')->name('sandbox');
 
 //Mikrotik
 Route::group(['prefix'=>'mikrotik','as'=>'mikrotik.'],function (){
-    Route::match(['post','get'],'/queue','RouterOSController@queue')->name('queue');
+    Route::match(['get'],'/status','MirotikController@systemStatus')->name('status');
 });
 
 Route::group(['prefix'=>'customers','as'=>'customers.'],function (){
@@ -71,8 +71,6 @@ Route::group(['prefix'=>'prepaid','as'=>'prepaid.'],function (){
     Route::match(['post','get'],'/{id}/edit','PrepaidController@edit')->name('edit');
     Route::match(['post'],'/delete','PrepaidController@delete')->name('delete');
 });
-
-
 
 Route::group(['prefix' => '/'], function () {
     Voyager::routes();

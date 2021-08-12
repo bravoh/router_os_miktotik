@@ -1,5 +1,4 @@
 <?php
-
 return [
     /*
     |--------------------------------------------------------------------------
@@ -145,7 +144,10 @@ return [
         ],
 
         'widgets' => [
-
+            \App\Widgets\CustomerDimmer::class,
+            \App\Widgets\EarningsDimmer::class,
+            \App\Widgets\SubscriptionDimmer::class,
+            \App\Widgets\DevicesDownDimmer::class
         ],
 
     ],

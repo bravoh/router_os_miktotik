@@ -174,4 +174,14 @@ class MikrotikAPIClass
         $query = (new Query("/ip/firewall/address-list/getall"));
         dd($this->client->query($query)->read());
     }
+
+    public function systemResource(){
+        $query =  (new Query("/system/resource/print"));
+        return $this->client->query($query)->read();
+    }
+
+    public function systemHealth(){
+        $query =  (new Query("/system/health/print"));
+        return  $this->client->query($query)->read();
+    }
 }
