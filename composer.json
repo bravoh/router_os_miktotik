@@ -41,7 +41,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "TCG\\Voyager\\": "TCG/Voyager"
+            "TCG\\Voyager\\": "tcg/voyager"
         },
         "classmap": [
             "database/seeds",

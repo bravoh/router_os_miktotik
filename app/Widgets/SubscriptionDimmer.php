@@ -28,7 +28,7 @@ class SubscriptionDimmer extends BaseDimmer
         $count = Subscription::whereStatus('up')->count();
         $string = trans_choice('Active Devices', $count);
 
-        return view('widgets.dimmer', array_merge($this->config, [
+        return view('voyager::widgets.dimmer', array_merge($this->config, [
             'icon'   => 'voyager-tag',
             'title'  => "{$count} {$string}",
             'text'   => __('voyager::dimmer.post_text', ['count' => $count, 'string' => Str::lower($string)]),

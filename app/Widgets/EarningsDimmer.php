@@ -29,7 +29,7 @@ class EarningsDimmer extends BaseDimmer
         $count = Transaction::sum("amount");
         $string = trans_choice('Earnings',$count);
 
-        return view('widgets.dimmer', array_merge($this->config, [
+        return view('voyager::widgets.dimmer', array_merge($this->config, [
             'icon'   => 'voyager-dollar',
             'title'  => "{$count} {$string}",
             'text'   => __('voyager::dimmer.post_text', ['count' =>$count, 'string' => Str::lower($string)]),

@@ -29,7 +29,7 @@ class DevicesDownDimmer extends BaseDimmer
         $count = Subscription::whereStatus('down')->count();
         $string = trans_choice('Downed Devices', $count);
 
-        return view('widgets.dimmer', array_merge($this->config, [
+        return view('voyager::widgets.dimmer', array_merge($this->config, [
             'icon'   => 'voyager-plug',
             'title'  => "{$count} {$string}",
             'text'   => __('voyager::dimmer.post_text', ['count' => $count, 'string' => Str::lower($string)]),

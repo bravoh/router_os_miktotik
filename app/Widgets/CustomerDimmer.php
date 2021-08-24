@@ -28,7 +28,7 @@ class CustomerDimmer extends BaseDimmer
         $count = Customer::count();
         $string = trans_choice('Customers', $count);
 
-        return view('widgets.dimmer', array_merge($this->config, [
+        return view('voyager::widgets.dimmer', array_merge($this->config, [
             'icon'   => 'voyager-person',
             'title'  => "{$count} {$string}",
             'text'   => __('voyager::dimmer.post_text', ['count' => $count, 'string' => Str::lower($string)]),
