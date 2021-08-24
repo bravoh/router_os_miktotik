@@ -467,7 +467,6 @@
 
                 // resize to redraw charts
                 window.dispatchEvent(new Event('resize'));
-
             });
 
         </script>

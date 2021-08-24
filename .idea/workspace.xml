@@ -20,27 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Widgets/CustomerDimmer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Widgets/DevicesDownDimmer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Widgets/EarningsDimmer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Widgets/SubscriptionDimmer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/dimmer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/dimmers.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/ajax-runner.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/dimmer.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/partials/customers.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/partials/networking.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/partials/system-status.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/isp-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/isp-app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/MikrotikWorker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RouterOSController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RouterOSController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/MirotikController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/MirotikController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Lib/MikrotikAPIClass.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/voyager.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/voyager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hooks/hooks.json" beforeDir="false" afterPath="$PROJECT_DIR$/hooks/hooks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/widgets/mikrotik/partials/customers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/widgets/mikrotik/partials/customers.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +290,9 @@
       <workItem from="1628427422295" duration="714000" />
       <workItem from="1628757386459" duration="6622000" />
       <workItem from="1628788387481" duration="438000" />
-      <workItem from="1628791808436" duration="13559000" />
+      <workItem from="1628791808436" duration="16033000" />
+      <workItem from="1629014200773" duration="373000" />
+      <workItem from="1629818988981" duration="12428000" />
     </task>
     <servers />
   </component>

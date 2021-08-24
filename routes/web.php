@@ -23,6 +23,7 @@ Route::get('/sandbox', 'HomeController@sandbox')->name('sandbox');
 //Mikrotik
 Route::group(['prefix'=>'mikrotik','as'=>'mikrotik.'],function (){
     Route::match(['get'],'/status','MirotikController@systemStatus')->name('status');
+    Route::match(['get'],'/cron','MirotikController@cron')->name('cron');
 });
 
 Route::group(['prefix'=>'customers','as'=>'customers.'],function (){

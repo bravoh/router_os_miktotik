@@ -184,4 +184,14 @@ class MikrotikAPIClass
         $query =  (new Query("/system/health/print"));
         return  $this->client->query($query)->read();
     }
+
+    public function connections(){
+        $query =  (new Query("/ip/firewall/connection/print"));
+        return  $this->client->query($query)->read();
+    }
+
+    public function customers(){
+        $query =  (new Query("/queue/simple/print"));
+        return  $this->client->query($query)->read();
+    }
 }
