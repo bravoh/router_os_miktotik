@@ -3,7 +3,8 @@
 @section('content')
     <div class="page-content">
         @include('voyager::alerts')
-        @include('voyager::dimmers')
+{{--        @include('voyager::dimmers')--}}
+        @include('widgets.tiles')
         @include('widgets.mikrotik.dimmer')
         <div class="analytics-container">
             <?php $google_analytics_client_id = Voyager::setting("admin.google_analytics_client_id"); ?>

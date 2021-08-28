@@ -144,6 +144,7 @@ return [
         ],
 
         'widgets' => [
+            //\TCG\Voyager\Widgets\PageDimmer::class,
             \App\Widgets\CustomerDimmer::class,
             \App\Widgets\EarningsDimmer::class,
             \App\Widgets\SubscriptionDimmer::class,

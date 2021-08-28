@@ -20,15 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/isp-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/isp-app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/widgets/tiles.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Widgets/CustomerDimmer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Widgets/CustomerDimmer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Widgets/DevicesDownDimmer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Widgets/DevicesDownDimmer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Widgets/EarningsDimmer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Widgets/EarningsDimmer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Widgets/SubscriptionDimmer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Widgets/SubscriptionDimmer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/widgets/dimmer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/widgets/dimmer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/widgets/dimmers.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/widgets/dimmers.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/voyager.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/voyager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +181,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="PHPT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/widgets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../kamp-reports" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -206,11 +202,11 @@
       <recent name="$PROJECT_DIR$/resources/views/plans" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LENOVO\Documents\Projects\router-os-app\resources\views\widgets" />
       <recent name="C:\Users\LENOVO\Documents\Projects\router-os-app\tcg\voyager\resources\views\widgets" />
       <recent name="$PROJECT_DIR$/resources/views/plans/hotspot" />
       <recent name="$PROJECT_DIR$/resources/views/plans" />
       <recent name="$PROJECT_DIR$/public/js" />
-      <recent name="$PROJECT_DIR$/app/Library" />
     </key>
   </component>
   <component name="RunManager">
@@ -293,7 +289,9 @@
       <workItem from="1628788387481" duration="438000" />
       <workItem from="1628791808436" duration="16033000" />
       <workItem from="1629014200773" duration="373000" />
-      <workItem from="1629818988981" duration="14377000" />
+      <workItem from="1629818988981" duration="17518000" />
+      <workItem from="1630155885407" duration="53000" />
+      <workItem from="1630179734763" duration="1604000" />
     </task>
     <servers />
   </component>

@@ -2,6 +2,9 @@
 
 namespace TCG\Voyager\Http\Controllers;
 
+use App\Customer;
+use App\Subscription;
+use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -16,7 +19,14 @@ class VoyagerController extends Controller
 {
     public function index()
     {
-        return Voyager::view('voyager::index');
+        $card_data = array(
+            "customer_count"=>$count = Customer::count(),
+            "downed" => Subscription::whereStatus('down')->count(),
+            "earnings"=> Transaction::sum("amount"),
+            "active_subscriptions"=> Subscription::whereStatus('up')->count()
+        );
+
+        return Voyager::view('voyager::index',compact("card_data"));
     }
 
     public function logout()
