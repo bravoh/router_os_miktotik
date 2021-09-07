@@ -222,6 +222,7 @@ class VoyagerBaseController extends Controller
                 ->orderBy('created_at')
                 ->limit(12)
                 ->get();
+            $slug = "amount";
         }else{
             $data = $model::selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
                 ->groupBy('year','month')
