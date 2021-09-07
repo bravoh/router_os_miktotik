@@ -49,7 +49,7 @@
         @include('voyager::alerts')
         <div class="row">
 
-            <?php $charted = ["Subscriptions","Transactions"] ?>
+            <?php $charted = ["Subscriptions","Transactions","Payments"] ?>
 
             <div class="col-md-12">
 
@@ -89,7 +89,7 @@
                         <div class="collapse-content collapse in" id="links" aria-expanded="true" style="">
                             <div class="row">
                                 <div class="col-md-12">
-                                    @include("charts.".strtolower($dataType->getTranslatedAttribute('display_name_plural')))
+                                    @include("charts.general")
                                 </div>
                             </div>
                         </div>

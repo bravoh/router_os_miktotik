@@ -35,7 +35,8 @@ class VoyagerBaseController extends Controller
 
     private $charted = [
         "subscriptions",
-        "transactions"
+        "transactions",
+        "mpesa-c2b-callbacks"
     ];
 
     public function index(Request $request){
@@ -43,8 +44,7 @@ class VoyagerBaseController extends Controller
         $slug = $this->getSlug($request);
 
         // GET THE DataType based on the slug
-        $dataType = Voyager::model('DataType')
-            ->where('slug', '=', $slug)->first();
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
         $chartData = [];
         if(in_array($slug,$this->charted))
@@ -81,6 +81,10 @@ class VoyagerBaseController extends Controller
             } else {
                 $query = $model::select('*');
             }
+
+            //Query By Date
+            if (isset(\request()->date1) && isset(\request()->date2))
+                $query = $this->queryByDate($query);
 
             // Use withTrashed() if model uses SoftDeletes and if toggle is selected
             if ($model && in_array(SoftDeletes::class, class_uses_recursive($model)) && Auth::user()->can('delete', app($dataType->model_name))) {
@@ -157,10 +161,6 @@ class VoyagerBaseController extends Controller
             }
         }
 
-        //Query By Date
-        if (isset(\request()->date1) && isset(\request()->date2))
-            $dataType->browseRows = $this->queryByDate($dataType);
-
         // Define orderColumn
         $orderColumn = [];
         if ($orderBy) {
@@ -197,8 +197,7 @@ class VoyagerBaseController extends Controller
         ));
     }
 
-    private function queryByDate($dataType){
-        $query = $dataType->browseRows;
+    private function queryByDate($query){
         $request = \request();
 
         $formated_date2 = Carbon::parse($request->date2)->format('Y-m-d');
@@ -217,13 +216,21 @@ class VoyagerBaseController extends Controller
     private function formatChartData($slug,$dataType){
         $model = app($dataType->model_name);
 
-        $data = $model::selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
-            ->groupBy('year','month')
-            ->orderBy('created_at')
-            ->limit(12)
-            ->get();
+        if ($slug == "mpesa-c2b-callbacks"){
+            $data = $model::selectRaw('YEAR(created_at) AS year, MONTHNAME(created_at) AS month, SUM(TransAmount) AS amount, COUNT(*) AS payments')
+                ->groupBy('year','month')
+                ->orderBy('created_at')
+                ->limit(12)
+                ->get();
+        }else{
+            $data = $model::selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
+                ->groupBy('year','month')
+                ->orderBy('created_at')
+                ->limit(12)
+                ->get();
+        }
 
-        $res[] = ['Month', $slug];
+        $res[] = ['Month', ucfirst($slug)];
         foreach ($data as $key => $val) {
             $res[++$key] = [
                 ucwords($val->year." ".$val->month),
