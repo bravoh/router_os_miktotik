@@ -5,16 +5,20 @@
 @section('page_header')
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="{{ $dataType->icon }}"></i> {{ $dataType->getTranslatedAttribute('display_name_plural') }}
+            <i class="{{ $dataType->icon }}"></i>
+            {{ $dataType->getTranslatedAttribute('display_name_plural') }}
         </h1>
+
         @can('add', app($dataType->model_name))
             <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
                 <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
             </a>
         @endcan
+
         @can('delete', app($dataType->model_name))
             @include('voyager::partials.bulk-delete')
         @endcan
+
         @can('edit', app($dataType->model_name))
             @if(isset($dataType->order_column) && isset($dataType->order_display_column))
                 <a href="{{ route('voyager.'.$dataType->slug.'.order') }}" class="btn btn-primary btn-add-new">
@@ -22,25 +26,78 @@
                 </a>
             @endif
         @endcan
+
         @can('delete', app($dataType->model_name))
             @if($usesSoftDeletes)
                 <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('voyager::bread.soft_deletes_off') }}" data-off="{{ __('voyager::bread.soft_deletes_on') }}">
             @endif
         @endcan
+
         @foreach($actions as $action)
             @if (method_exists($action, 'massAction'))
                 @include('voyager::bread.partials.actions', ['action' => $action, 'data' => null])
             @endif
         @endforeach
+
         @include('voyager::multilingual.language-selector')
     </div>
 @stop
 
 @section('content')
+
     <div class="page-content browse container-fluid">
         @include('voyager::alerts')
         <div class="row">
+
+            <?php $charted = ["Subscriptions","Transactions"] ?>
+
             <div class="col-md-12">
+
+
+                <form method="GET" id="queryByDateForm" class="form-horizontal">
+                    @csrf
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <div id="reportrange" style="border-radius:5px; background: #fff; cursor: pointer; padding: 10px 10px; border: 1px solid #ccc; width: 100%;height: 40px">
+                                        <i class="fa fa-calendar"></i>&nbsp;
+                                        <span></span> <i class="fa fa-caret-down"></i>
+                                    </div>
+                                    <input class="date1" type="hidden" name="date1" value="">
+                                    <input class="date2" type="hidden" name="date2" value="">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <input style="padding: 10px" type="submit" class="btn btn-primary" value="Filter">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+
+                <br/>
+
+                @if(in_array($dataType->getTranslatedAttribute('display_name_plural'),$charted))
+                    <div class="collapsible">
+                        <div class="collapse-head" data-toggle="collapse" data-target="#links" aria-expanded="true" aria-controls="links">
+                            <h4>Chart</h4>
+                            <i class="voyager-angle-down" style="display: none;"></i>
+                            <i class="voyager-angle-up" style=""></i>
+                        </div>
+                        <div class="collapse-content collapse in" id="links" aria-expanded="true" style="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @include("charts.".strtolower($dataType->getTranslatedAttribute('display_name_plural')))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <br/>
+
                 <div class="panel panel-bordered">
                     <div class="panel-body">
                         @if ($isServerSide)
@@ -285,6 +342,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -320,6 +378,11 @@
     @if(!$dataType->server_side && config('dashboard.data_tables.responsive'))
         <script src="{{ voyager_asset('lib/js/dataTables.responsive.min.js') }}"></script>
     @endif
+
+    <link rel="stylesheet" type="text/css" href="/lib/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="/lib/daterangepicker/moment.min.js"></script>
+    <script type="text/javascript" src="/lib/daterangepicker/daterangepicker.js"></script>
+
     <script>
         $(document).ready(function () {
             @if (!$dataType->server_side)
@@ -331,6 +394,40 @@
                     ],
                     config('voyager.dashboard.data_tables', []))
                 , true) !!});
+
+                var start = moment().subtract(29, 'days');
+                var end = moment();
+
+                function cb(start, end) {
+                    let startDate =  start.format('YYYY-MM-DD');
+                    let endDate = end.format('YYYY-MM-DD');
+
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    $('.date1').val(startDate);
+                    $('.date2').val(endDate);
+
+                    //$("#queryByDateForm").submit();
+                }
+
+                $('#reportrange').daterangepicker({
+                    startDate: start,
+                    endDate: end,
+                    autoApply: true,
+                    alwaysShowCalendars: true,
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'This Week': [moment().startOf('week'), moment().endOf('week')],
+                        'Last Week': [moment().subtract(1, 'weeks').startOf('week'), moment().subtract(1, 'weeks').endOf('week')],
+                        'Last 2 Weeks': [moment().subtract(14, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment()]
+                    },
+                }, cb);
+                cb(start, end);
             @else
                 $('#search-input select').select2({
                     minimumResultsForSearch: Infinity
@@ -366,6 +463,7 @@
                     'sort_order' => $sortOrder,
                 ];
             @endphp
+
             $(function() {
                 $('#show_soft_deletes').change(function() {
                     if ($(this).prop('checked')) {
@@ -378,6 +476,7 @@
                 })
             })
         @endif
+
         $('input[name="row_id"]').on('change', function () {
             var ids = [];
             $('input[name="row_id"]').each(function() {
@@ -387,5 +486,6 @@
             });
             $('.selected_ids').val(ids);
         });
+
     </script>
 @stop

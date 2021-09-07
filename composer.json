@@ -11,6 +11,7 @@
         "php": "^7.1.3",
         "ext-json": "*",
         "africastalking/africastalking": "^3.0",
+        "consoletvs/charts": "^7.2",
         "evilfreelancer/routeros-api-php": "^1.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",

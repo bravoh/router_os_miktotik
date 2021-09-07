@@ -37,10 +37,7 @@ Route::group(['as' => 'voyager.'], function () {
 
         try {
             foreach (Voyager::model('DataType')::all() as $dataType) {
-                $breadController = $dataType->controller
-                                 ? Str::start($dataType->controller, '\\')
-                                 : $namespacePrefix.'VoyagerBaseController';
-
+                $breadController = $dataType->controller ? Str::start($dataType->controller, '\\') : $namespacePrefix.'VoyagerBaseController';
                 Route::get($dataType->slug.'/order', $breadController.'@order')->name($dataType->slug.'.order');
                 Route::post($dataType->slug.'/action', $breadController.'@action')->name($dataType->slug.'.action');
                 Route::post($dataType->slug.'/order', $breadController.'@update_order')->name($dataType->slug.'.order');

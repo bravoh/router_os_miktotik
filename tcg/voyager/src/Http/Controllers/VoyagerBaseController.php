@@ -2,6 +2,7 @@
 
 namespace TCG\Voyager\Http\Controllers;
 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
@@ -32,13 +33,22 @@ class VoyagerBaseController extends Controller
     //
     //****************************************
 
-    public function index(Request $request)
-    {
+    private $charted = [
+        "subscriptions",
+        "transactions"
+    ];
+
+    public function index(Request $request){
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
         // GET THE DataType based on the slug
-        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+        $dataType = Voyager::model('DataType')
+            ->where('slug', '=', $slug)->first();
+
+        $chartData = [];
+        if(in_array($slug,$this->charted))
+            $chartData = $this->formatChartData($slug,$dataType);
 
         // Check permission
         $this->authorize('browse', app($dataType->model_name));
@@ -147,10 +157,16 @@ class VoyagerBaseController extends Controller
             }
         }
 
+        //Query By Date
+        if (isset(\request()->date1) && isset(\request()->date2))
+            $dataType->browseRows = $this->queryByDate($dataType);
+
         // Define orderColumn
         $orderColumn = [];
         if ($orderBy) {
-            $index = $dataType->browseRows->where('field', $orderBy)->keys()->first() + ($showCheckboxColumn ? 1 : 0);
+            $index = $dataType->browseRows->where('field', $orderBy)
+                    ->keys()
+                    ->first() + ($showCheckboxColumn ? 1 : 0);
             $orderColumn = [[$index, $sortOrder ?? 'desc']];
         }
 
@@ -160,7 +176,8 @@ class VoyagerBaseController extends Controller
             $view = "voyager::$slug.browse";
         }
 
-        return Voyager::view($view, compact(
+        return Voyager::view($view,
+            compact(
             'actions',
             'dataType',
             'dataTypeContent',
@@ -174,8 +191,47 @@ class VoyagerBaseController extends Controller
             'defaultSearchKey',
             'usesSoftDeletes',
             'showSoftDeleted',
-            'showCheckboxColumn'
+            'showCheckboxColumn',
+            //custom
+            'chartData'
         ));
+    }
+
+    private function queryByDate($dataType){
+        $query = $dataType->browseRows;
+        $request = \request();
+
+        $formated_date2 = Carbon::parse($request->date2)->format('Y-m-d');
+        $formated_date1 = Carbon::parse($request->date1)->format('Y-m-d');
+
+        if ($request->date1 == $request->date2){
+            $query->where(\DB::raw('date(created_at)'), $formated_date1);
+        }else{
+            $query->where(\DB::raw('date(created_at)'), '>=', $formated_date1);
+            $query->where(\DB::raw('date(created_at)'), '<=', $formated_date2);
+        }
+
+        return $query;
+    }
+
+    private function formatChartData($slug,$dataType){
+        $model = app($dataType->model_name);
+
+        $data = $model::selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
+            ->groupBy('year','month')
+            ->orderBy('created_at')
+            ->limit(12)
+            ->get();
+
+        $res[] = ['Month', $slug];
+        foreach ($data as $key => $val) {
+            $res[++$key] = [
+                ucwords($val->year." ".$val->month),
+                (int)$val->$slug
+            ];
+        }
+
+        return json_encode($res);
     }
 
     //***************************************
@@ -364,8 +420,8 @@ class VoyagerBaseController extends Controller
         $this->authorize('add', app($dataType->model_name));
 
         $dataTypeContent = (strlen($dataType->model_name) != 0)
-                            ? new $dataType->model_name()
-                            : false;
+            ? new $dataType->model_name()
+            : false;
 
         foreach ($dataType->addRows as $key => $row) {
             $dataType->addRows[$key]['col_width'] = $row->details->width ?? 100;
@@ -760,11 +816,11 @@ class VoyagerBaseController extends Controller
 
         if (!isset($dataType->order_column) || !isset($dataType->order_display_column)) {
             return redirect()
-            ->route("voyager.{$dataType->slug}.index")
-            ->with([
-                'message'    => __('voyager::bread.ordering_not_set'),
-                'alert-type' => 'error',
-            ]);
+                ->route("voyager.{$dataType->slug}.index")
+                ->with([
+                    'message'    => __('voyager::bread.ordering_not_set'),
+                    'alert-type' => 'error',
+                ]);
         }
 
         $model = app($dataType->model_name);
