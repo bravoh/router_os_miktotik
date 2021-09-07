@@ -20,11 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/views/charts/general.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/charts/subscriptions.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/charts/transactions.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/browse.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/browse.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -294,7 +290,7 @@
       <workItem from="1630155885407" duration="53000" />
       <workItem from="1630179734763" duration="6321000" />
       <workItem from="1631000870419" duration="1880000" />
-      <workItem from="1631005996542" duration="12831000" />
+      <workItem from="1631005996542" duration="13478000" />
     </task>
     <servers />
   </component>
