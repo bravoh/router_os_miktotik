@@ -217,14 +217,21 @@ class VoyagerBaseController extends Controller
         $model = app($dataType->model_name);
 
         if ($slug == "mpesa-c2b-callbacks"){
-            $data = $model::selectRaw('YEAR(created_at) AS year, MONTHNAME(created_at) AS month, SUM(TransAmount) AS amount')
+            $query = $model::query();
+
+            $query = $this->queryByDate($query);
+
+            $data = $query->selectRaw('YEAR(created_at) AS year, MONTHNAME(created_at) AS month, SUM(TransAmount) AS amount')
                 ->groupBy('year','month')
                 ->orderBy('created_at')
                 ->limit(12)
                 ->get();
+                
             $slug = "amount";
         }else{
-            $data = $model::selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
+            $query = $model::query();
+            $query = $this->queryByDate($query);
+            $data = $query->selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
                 ->groupBy('year','month')
                 ->orderBy('created_at')
                 ->limit(12)

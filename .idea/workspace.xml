@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +289,8 @@
       <workItem from="1630155885407" duration="53000" />
       <workItem from="1630179734763" duration="6321000" />
       <workItem from="1631000870419" duration="1880000" />
-      <workItem from="1631005996542" duration="15193000" />
+      <workItem from="1631005996542" duration="16972000" />
+      <workItem from="1631027306665" duration="203000" />
     </task>
     <servers />
   </component>
