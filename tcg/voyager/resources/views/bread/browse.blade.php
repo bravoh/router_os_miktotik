@@ -53,7 +53,6 @@
 
             <div class="col-md-12">
 
-
                 <form method="GET" id="queryByDateForm" class="form-horizontal">
                     @csrf
                     <table>
@@ -64,8 +63,8 @@
                                         <i class="fa fa-calendar"></i>&nbsp;
                                         <span></span> <i class="fa fa-caret-down"></i>
                                     </div>
-                                    <input class="date1" type="hidden" name="date1" value="">
-                                    <input class="date2" type="hidden" name="date2" value="">
+                                    <input class="date1" type="hidden" name="date1" value="{{$start}}">
+                                    <input class="date2" type="hidden" name="date2" value="{{$end}}">
                                 </div>
                             </td>
                             <td>
@@ -395,17 +394,19 @@
                     config('voyager.dashboard.data_tables', []))
                 , true) !!});
 
-                var start = moment().subtract(29, 'days');
-                var end = moment();
+                //var start = moment().subtract(29, 'days');
+                //var end = moment();
+                var start = moment($(".date1").val())
+                var end = moment($(".date2").val())
 
                 function cb(start, end) {
+
                     let startDate =  start.format('YYYY-MM-DD');
                     let endDate = end.format('YYYY-MM-DD');
 
                     $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                     $('.date1').val(startDate);
                     $('.date2').val(endDate);
-
                     //$("#queryByDateForm").submit();
                 }
 

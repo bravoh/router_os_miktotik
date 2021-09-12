@@ -83,8 +83,7 @@ class VoyagerBaseController extends Controller
             }
 
             //Query By Date
-            if (isset(\request()->date1) && isset(\request()->date2))
-                $query = $this->queryByDate($query);
+            $query = $this->queryByDate($query);
 
             // Use withTrashed() if model uses SoftDeletes and if toggle is selected
             if ($model && in_array(SoftDeletes::class, class_uses_recursive($model)) && Auth::user()->can('delete', app($dataType->model_name))) {
@@ -176,6 +175,16 @@ class VoyagerBaseController extends Controller
             $view = "voyager::$slug.browse";
         }
 
+        $start = date("Y-m-d", strtotime('-29 days'));
+        $end = date("Y-m-d");
+
+        if (!is_null(\request()->date1) && !is_null(\request()->date2)){
+            $start = \request()->date1;
+            $end = \request()->date2;
+        }
+
+        //dd(\request()->date1);
+
         return Voyager::view($view,
             compact(
             'actions',
@@ -193,21 +202,28 @@ class VoyagerBaseController extends Controller
             'showSoftDeleted',
             'showCheckboxColumn',
             //custom
-            'chartData'
+            'chartData',
+                'start',
+                'end'
         ));
     }
 
     private function queryByDate($query){
         $request = \request();
 
-        $formated_date2 = Carbon::parse($request->date2)->format('Y-m-d');
-        $formated_date1 = Carbon::parse($request->date1)->format('Y-m-d');
+        $date1 = date("Y-m-d", strtotime('-30 days'));
+        $date2 = date("Y-m-d");
 
-        if ($request->date1 == $request->date2){
-            $query->where(\DB::raw('date(created_at)'), $formated_date1);
+        if (!is_null($request->date1) && !is_null($request->date2)){
+            $date2 = Carbon::parse($request->date2)->format('Y-m-d');
+            $date1 = Carbon::parse($request->date1)->format('Y-m-d');
+        }
+
+        if ($date1 == $date2){
+            $query->where(\DB::raw('date(created_at)'), $date1);
         }else{
-            $query->where(\DB::raw('date(created_at)'), '>=', $formated_date1);
-            $query->where(\DB::raw('date(created_at)'), '<=', $formated_date2);
+            $query->where(\DB::raw('date(created_at)'), '>=', $date1);
+            $query->where(\DB::raw('date(created_at)'), '<=', $date2);
         }
 
         return $query;
@@ -218,32 +234,46 @@ class VoyagerBaseController extends Controller
 
         if ($slug == "mpesa-c2b-callbacks"){
             $query = $model::query();
-
             $query = $this->queryByDate($query);
 
-            $data = $query->selectRaw('YEAR(created_at) AS year, MONTHNAME(created_at) AS month, SUM(TransAmount) AS amount')
-                ->groupBy('year','month')
-                ->orderBy('created_at')
-                ->limit(12)
-                ->get();
-                
-            $slug = "amount";
+            $data = $query->groupBy(DB::raw("DATE(created_at)"))
+                ->orderBy("created_at", "ASC")
+                ->get(array(
+                    DB::raw('DATE(created_at) AS date'),
+                    //DB::raw('COUNT(*) AS "'.$slug.'"'),
+                    DB::raw('SUM(TransAmount) AS amount')
+                ));
+
         }else{
+
             $query = $model::query();
             $query = $this->queryByDate($query);
-            $data = $query->selectRaw('YEAR(created_at) as year, MONTHNAME(created_at) AS month, count(*) AS '.$slug)
-                ->groupBy('year','month')
-                ->orderBy('created_at')
-                ->limit(12)
-                ->get();
-        }
 
-        $res[] = ['Month', ucfirst($slug)];
-        foreach ($data as $key => $val) {
-            $res[++$key] = [
-                ucwords($val->year." ".$val->month),
-                (int)$val->$slug
-            ];
+            $data = $query->groupBy(DB::raw("DATE(created_at)"))->orderBy("created_at", "ASC")
+                ->get(array(
+                    DB::raw('DATE(created_at) AS date'),
+                    DB::raw('COUNT(*) AS "'.$slug.'"')
+                ));
+
+        }
+        // get keys
+        $keys = [];
+        $res = [];
+        if (count($data)){
+
+            foreach (array_keys($data[0]->getAttributes()) as $item){
+                $keys[] = $item;
+            }
+
+            $res[] = $keys;
+            foreach ($data as $key => $val) {
+
+                $k1 = $keys[1];
+                $res[++$key] = [
+                    date("M jS, Y",strtotime($val->date)),
+                    (int)$val->$k1,
+                ];
+            }
         }
 
         return json_encode($res);

@@ -20,8 +20,7 @@ class VoyagerBreadController extends Controller
     {
         $this->authorize('browse_bread');
 
-        $dataTypes = Voyager::model('DataType')
-            ->select('id', 'name', 'slug')
+        $dataTypes = Voyager::model('DataType')->select('id', 'name', 'slug')
             ->get()
             ->keyBy('name')
             ->toArray();

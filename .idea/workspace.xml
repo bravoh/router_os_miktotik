@@ -21,6 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/browse.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/browse.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBreadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBreadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,6 +295,8 @@
       <workItem from="1631000870419" duration="1880000" />
       <workItem from="1631005996542" duration="16972000" />
       <workItem from="1631027306665" duration="203000" />
+      <workItem from="1631445156365" duration="1193000" />
+      <workItem from="1631454884071" duration="12606000" />
     </task>
     <servers />
   </component>
@@ -308,5 +314,20 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBreadController.php</url>
+          <line>52</line>
+          <properties>
+            <option name="className" value="\TCG\Voyager\Http\Controllers\VoyagerBreadController" />
+            <option name="methodName" value="create" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
