@@ -24,16 +24,31 @@ $dataTypeContent->{$row->field} = json_decode($dataTypeContent->{$row->field})
             @endforeach
         @endif
     @elseif(isset($options->options))
-        @foreach($options->options as $key => $label)
-                <?php $selected = ''; ?>
+        @if($row->field == 'recipient')
+            <?php $customers = \App\Customer::all(); ?>
+            <?php $selected = ''; ?>
             @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
-                <?php $selected = 'selected="selected"'; ?>
+               <?php $selected = 'selected="selected"'; ?>
             @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
                 <?php $selected = 'selected="selected"'; ?>
             @endif
-            <option value="{{ $key }}" {!! $selected !!}>
-                {{ $label }}
-            </option>
-        @endforeach
+
+            @foreach($customers as $customer)
+                <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->phone }}</option>
+            @endforeach
+
+        @else
+            @foreach($options->options as $key => $label)
+                    <?php $selected = ''; ?>
+                @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
+                    <?php $selected = 'selected="selected"'; ?>
+                @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
+                    <?php $selected = 'selected="selected"'; ?>
+                @endif
+                <option value="{{ $key }}" {!! $selected !!}>
+                    {{ $label }}
+                </option>
+            @endforeach
+        @endif
     @endif
 </select>

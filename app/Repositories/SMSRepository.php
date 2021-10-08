@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use AfricasTalking\SDK\AfricasTalking;
 use App\Sms;
+use App\SmsApiResponse;
 use Illuminate\Support\Facades\Log;
 
 class SMSRepository implements SMSInterface
@@ -62,7 +63,7 @@ class SMSRepository implements SMSInterface
     public function saveSmsResponse($resp, $message, $customer = null){
         $resp = json_decode($resp);
         $data = (object)$resp->data->SMSMessageData->Recipients[0];
-        Sms::create([
+        SmsApiResponse::create([
             'messageId'=>$data->messageId,
             'customer_id'=>$customer->id,
             'recipient'=>$data->number,

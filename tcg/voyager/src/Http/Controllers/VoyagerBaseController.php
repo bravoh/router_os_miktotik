@@ -2,6 +2,7 @@
 
 namespace TCG\Voyager\Http\Controllers;
 
+use App\Repositories\SMSRepository;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -499,6 +500,7 @@ class VoyagerBaseController extends Controller
      */
     public function store(Request $request)
     {
+
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -511,6 +513,10 @@ class VoyagerBaseController extends Controller
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
 
         event(new BreadDataAdded($dataType, $data));
+
+        if ($slug == "sms"){
+            $this->sendSmsMessage($data);
+        }
 
         if (!$request->has('_tagging')) {
             if (auth()->user()->can('browse', $data)) {
@@ -525,6 +531,17 @@ class VoyagerBaseController extends Controller
             ]);
         } else {
             return response()->json(['success' => true, 'data' => $data]);
+        }
+    }
+
+    public function sendSmsMessage($SMS){
+        $SMSRepository = new SMSRepository();
+        $message = \request()->message;
+        if (\request()->recipient && !empty(\request()->message)){
+            foreach (\request()->recipient as $recipient){
+                $resp = $SMSRepository->send($recipient,$message);
+                $SMSRepository->saveSmsResponse($resp,$message);
+            }
         }
     }
 
