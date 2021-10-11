@@ -20,15 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3695aaa7-a164-4767-ac4c-b2079ee38e06" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Repositories/SMSRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Repositories/SMSRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Sms.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Sms.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/SmsApiResponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/SmsApiResponse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/voyager.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/voyager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/edit-add.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/bread/edit-add.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/formfields/select_dropdown.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/formfields/select_dropdown.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tcg/voyager/resources/views/formfields/select_multiple.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/resources/views/formfields/select_multiple.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/tcg/voyager/src/Http/Controllers/VoyagerBaseController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,7 +295,7 @@
       <workItem from="1631454884071" duration="13214000" />
       <workItem from="1633076803719" duration="3866000" />
       <workItem from="1633621905919" duration="15281000" />
-      <workItem from="1633932966481" duration="25247000" />
+      <workItem from="1633932966481" duration="25763000" />
     </task>
     <servers />
   </component>

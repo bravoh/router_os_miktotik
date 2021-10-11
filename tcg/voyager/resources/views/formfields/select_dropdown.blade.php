@@ -72,7 +72,8 @@
                     'all'=>"All Customers",
                 ];
                 foreach ($rates as $rate){
-                    $recipient_types["by_".$rate['name']] = ucwords($rate['name'])." Subscribers";
+                    if($rate->type == "live")
+                        $recipient_types["by_".$rate['name']] = ucwords($rate['name'])." Subscribers";
                 }
                 ?>
 
