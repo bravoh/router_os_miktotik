@@ -42,7 +42,7 @@ Route::group(['prefix'=>'subscriptions','as'=>'subscriptions.'],function (){
 });
 Route::group(['prefix'=>'sms','as'=>'sms.'],function (){
     Route::match(['get'],'/','SmsController@index')->name('index');
-
+    Route::match(['get'],'/run-scheduled','SmsController@runScheduler')->name('run.scheduled');
 });
 
 Route::group(['prefix'=>'plans','as'=>'plans.'],function (){
