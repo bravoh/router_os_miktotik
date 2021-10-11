@@ -61,17 +61,24 @@ class SMSRepository implements SMSInterface
     }
 
     public function saveSmsResponse($resp, $message, $customer = null){
+
         $resp = json_decode($resp);
-        $data = (object)$resp->data->SMSMessageData->Recipients[0];
+        $recipients = $resp->data->SMSMessageData->Recipients;
+        $data = $resp->data->SMSMessageData;
+
+        if (count($recipients))
+            $data = (object)$recipients[0];
+
         SmsApiResponse::create([
-            'messageId'=>$data->messageId,
-            'customer_id'=>$customer->id,
-            'recipient'=>$data->number,
+            'messageId'=>@$data->messageId,
+            'customer_id'=>@$customer->id,
+            'recipient'=>count($recipients)?@$data->number:$customer->phone,
             'message'=>$message,
-            'messageParts'=>$data->messageParts,
-            'cost'=>$data->cost,
-            'status'=>$data->status,
-            'statusCode'=>$data->statusCode
+            'messageParts'=>@$data->messageParts,
+            'cost'=>@$data->cost,
+            'status'=>count($recipients)?@$data->status:$data->Message,
+            'statusCode'=>@$data->statusCode
         ]);
+
     }
 }

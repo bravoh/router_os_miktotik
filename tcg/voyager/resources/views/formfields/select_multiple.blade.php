@@ -1,11 +1,12 @@
+
 {{-- If this is a relationship and the method does not exist, show a warning message --}}
 @if(isset($options->relationship) && !method_exists( $dataType->model_name, \Illuminate\Support\Str::camel($row->field) ) )
     <p class="label label-warning"><i class="voyager-warning"></i> {{ __('voyager::form.field_select_dd_relationship', ['method' => \Illuminate\Support\Str::camel($row->field).'()', 'class' => $dataType->model_name]) }}</p>
 @endif
 @php
-$dataTypeContent->{$row->field} = json_decode($dataTypeContent->{$row->field})
+    $dataTypeContent->{$row->field} = json_decode($dataTypeContent->{$row->field})
 @endphp
-<select class="form-control select2" name="{{ $row->field }}[]" multiple>
+<select class="form-control select2 {{ $row->field }}_form_field" name="{{ $row->field }}[]" multiple>
     @if(isset($options->relationship))
         {{-- Check that the relationship method exists --}}
         @if( method_exists( $dataType->model_name, \Illuminate\Support\Str::camel($row->field) ) )
@@ -28,18 +29,18 @@ $dataTypeContent->{$row->field} = json_decode($dataTypeContent->{$row->field})
             <?php $customers = \App\Customer::all(); ?>
             <?php $selected = ''; ?>
             @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
-               <?php $selected = 'selected="selected"'; ?>
+                <?php $selected = 'selected="selected"'; ?>
             @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
                 <?php $selected = 'selected="selected"'; ?>
             @endif
 
             @foreach($customers as $customer)
-                <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->phone }}</option>
+                <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->name }}</option>
             @endforeach
 
         @else
             @foreach($options->options as $key => $label)
-                    <?php $selected = ''; ?>
+                <?php $selected = ''; ?>
                 @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
                     <?php $selected = 'selected="selected"'; ?>
                 @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
@@ -52,3 +53,4 @@ $dataTypeContent->{$row->field} = json_decode($dataTypeContent->{$row->field})
         @endif
     @endif
 </select>
+

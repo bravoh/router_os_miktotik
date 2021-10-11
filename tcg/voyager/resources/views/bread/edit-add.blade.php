@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="panel panel-bordered">
+                <div class="panel php panel-bordered">
                     <!-- form start -->
                     <form role="form"
                             class="form-edit-add"
@@ -161,6 +161,20 @@
           };
         }
 
+        function toggleSmsRecipientList(){
+            var recipient_type = $('.recipient_type_form_field').val();
+
+            if (recipient_type === "select"){
+                $(".recipient_form_field").parents('div .form-group').css({
+                    "display":"block"
+                });
+            }else{
+                $(".recipient_form_field").parents('div .form-group').css({
+                    "display":"none"
+                });
+            }
+        }
+
         $('document').ready(function () {
             $('.toggleswitch').bootstrapToggle();
 
@@ -209,6 +223,11 @@
                 $('#confirm_delete_modal').modal('hide');
             });
             $('[data-toggle="tooltip"]').tooltip();
+
+            toggleSmsRecipientList();
+            $(".recipient_type_form_field").change(function (e){
+                toggleSmsRecipientList();
+            });
         });
     </script>
 @stop

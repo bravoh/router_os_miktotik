@@ -2,6 +2,7 @@
 
 namespace TCG\Voyager\Http\Controllers;
 
+use App\Customer;
 use App\Repositories\SMSRepository;
 use Carbon\Carbon;
 use Exception;
@@ -84,7 +85,7 @@ class VoyagerBaseController extends Controller
             }
 
             //Query By Date
-            $query = $this->queryByDate($query);
+            $query = $this->queryByDate($query,$slug);
 
             // Use withTrashed() if model uses SoftDeletes and if toggle is selected
             if ($model && in_array(SoftDeletes::class, class_uses_recursive($model)) && Auth::user()->can('delete', app($dataType->model_name))) {
@@ -184,8 +185,6 @@ class VoyagerBaseController extends Controller
             $end = \request()->date2;
         }
 
-        //dd(\request()->date1);
-
         return Voyager::view($view,
             compact(
             'actions',
@@ -209,22 +208,30 @@ class VoyagerBaseController extends Controller
         ));
     }
 
-    private function queryByDate($query){
+    private function queryByDate($query,$slug){
         $request = \request();
 
-        $date1 = date("Y-m-d", strtotime('-30 days'));
-        $date2 = date("Y-m-d");
+        $allowed = [
+            "mpesa-c2b-callbacks",
+            "transactions",
+            "sms"
+        ];
 
-        if (!is_null($request->date1) && !is_null($request->date2)){
-            $date2 = Carbon::parse($request->date2)->format('Y-m-d');
-            $date1 = Carbon::parse($request->date1)->format('Y-m-d');
-        }
+        if (in_array($slug,$allowed)){
+            $date1 = date("Y-m-d", strtotime('-30 days'));
+            $date2 = date("Y-m-d");
 
-        if ($date1 == $date2){
-            $query->where(\DB::raw('date(created_at)'), $date1);
-        }else{
-            $query->where(\DB::raw('date(created_at)'), '>=', $date1);
-            $query->where(\DB::raw('date(created_at)'), '<=', $date2);
+            if (!is_null($request->date1) && !is_null($request->date2)){
+                $date2 = Carbon::parse($request->date2)->format('Y-m-d');
+                $date1 = Carbon::parse($request->date1)->format('Y-m-d');
+            }
+
+            if ($date1 == $date2){
+                $query->where(\DB::raw('date(created_at)'), $date1);
+            }else{
+                $query->where(\DB::raw('date(created_at)'), '>=', $date1);
+                $query->where(\DB::raw('date(created_at)'), '<=', $date2);
+            }
         }
 
         return $query;
@@ -235,7 +242,7 @@ class VoyagerBaseController extends Controller
 
         if ($slug == "mpesa-c2b-callbacks"){
             $query = $model::query();
-            $query = $this->queryByDate($query);
+            $query = $this->queryByDate($query,$slug);
 
             $data = $query->groupBy(DB::raw("DATE(created_at)"))
                 ->orderBy("created_at", "ASC")
@@ -248,7 +255,7 @@ class VoyagerBaseController extends Controller
         }else{
 
             $query = $model::query();
-            $query = $this->queryByDate($query);
+            $query = $this->queryByDate($query,$slug);
 
             $data = $query->groupBy(DB::raw("DATE(created_at)"))->orderBy("created_at", "ASC")
                 ->get(array(
@@ -535,13 +542,21 @@ class VoyagerBaseController extends Controller
     }
 
     public function sendSmsMessage($SMS){
-        $SMSRepository = new SMSRepository();
-        $message = \request()->message;
-        if (\request()->recipient && !empty(\request()->message)){
-            foreach (\request()->recipient as $recipient){
-                $resp = $SMSRepository->send($recipient,$message);
-                $SMSRepository->saveSmsResponse($resp,$message);
+        if (is_null(\request()->tobe_sent_at)){
+            $SMSRepository = new SMSRepository();
+            $message = \request()->message;
+
+            if (\request()->recipient_type == 'select') {
+                foreach ($SMS->recipients as $recipient) {
+                    $resp = $SMSRepository->send($recipient, $message);
+                    $customer = Customer::wherePhone($recipient)->first();
+                    $SMSRepository->saveSmsResponse($resp, $message, $customer);
+                }
             }
+
+            $SMS->sent_at = date('Y-m-d h:i:s');
+            $SMS->status = "Processed";
+            $SMS->save();
         }
     }
 
