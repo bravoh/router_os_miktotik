@@ -42,8 +42,7 @@ class ScheduledSmsRunner extends Command
      */
     public function handle()
     {
-        $scheduled = Sms::where('tobe_sent_at', '>=', Carbon::now()
-            ->subMinutes(5)->toDateTimeString())
+        $scheduled = Sms::where('tobe_sent_at', '>=', Carbon::now()->subMinutes(45)->toDateTimeString())
             ->whereNull("sent_at")
             ->whereNull("status")
             ->get();
