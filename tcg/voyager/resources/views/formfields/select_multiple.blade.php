@@ -27,17 +27,20 @@
     @elseif(isset($options->options))
         @if($row->field == 'recipient')
             <?php $customers = \App\Customer::all(); ?>
-            <?php $selected = ''; ?>
-            @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
-                <?php $selected = 'selected="selected"'; ?>
-            @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
-                <?php $selected = 'selected="selected"'; ?>
-            @endif
-
             @foreach($customers as $customer)
+                 <?php
+                    $selected = '';
+                    $key = $customer->phone;
+                 ?>
+
+                 @if(is_array($dataTypeContent->{$row->field}) && in_array($key, $dataTypeContent->{$row->field}))
+                     <?php $selected = 'selected="selected"'; ?>
+                 @elseif(!is_null(old($row->field)) && in_array($key, old($row->field)))
+                     <?php $selected = 'selected="selected"'; ?>
+                 @endif
+
                 <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->name }}</option>
             @endforeach
-
         @else
             @foreach($options->options as $key => $label)
                 <?php $selected = ''; ?>
