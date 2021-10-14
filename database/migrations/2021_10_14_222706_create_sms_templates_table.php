@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePricingRatesTable extends Migration
+class CreateSmsTemplatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePricingRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pricing_rates', function (Blueprint $table) {
+        Schema::create('sms_templates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("name");
-            $table->string("maxLimit");//max-limit
-            $table->string("limitAt");//limit-at
-            $table->string("type");
+            $table->string("sms");
+            $table->text("template");
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePricingRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pricing_rates');
+        Schema::dropIfExists('sms_templates');
     }
 }

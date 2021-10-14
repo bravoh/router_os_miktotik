@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Lib\MikrotikAPIClass;
+use App\PricingRate;
 use App\Subscription;
 use App\Transaction;
 use Illuminate\Console\Command;
@@ -43,6 +44,7 @@ class MikrotikWorker extends Command
     public function handle()
     {
         $currentDate = date('Y-m-d');
+
         $items = Subscription::whereDate('valid_until', '<=', $currentDate)
             ->whereStatus('up')
             ->get();
@@ -76,20 +78,21 @@ class MikrotikWorker extends Command
             ->first();
 
         if (!empty($Trx)){
-            $rates = config('router_os.rates');
-            $rate = $rates[$Trx->amount];
+
+            $rate = PricingRate::whereName($Trx->amount)->first();
 
             $data = array (
                 "name" => $customer->name,
                 "target" => $customer->default_target_ip,
-                "max-limit" => $rate['max-limit'],
-                "limit-at" => $rate['limit-at'],
+                "max-limit" => $rate->maxLimit,
+                "limit-at" => $rate->limitAt,
                 "comment" =>  "KES ".$Trx->amount." voucher automatic processed"
             );
 
             $MIKROTIK->queue($data);
 
             $uuid = Uuid::uuid4();
+
             Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
                 "customer_id"=>$customer->id,
                 "plan"=>$rate['name'],
@@ -106,6 +109,7 @@ class MikrotikWorker extends Command
     }
 
     public function zeroQueue($customer,$MIKROTIK){
+
         $data = array (
             "name" => $customer->name,
             "target" => $customer->default_target_ip,
@@ -113,7 +117,9 @@ class MikrotikWorker extends Command
             "limit-at" => "0/0",
             "comment" =>  "Downed on: ".date('Y-m-d h:i:s')
         );
+
         Log::alert('Downing Data: '.json_encode($data));
+
         $MIKROTIK->queue($data);
     }
 }

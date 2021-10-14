@@ -26,6 +26,6 @@ class HomeController extends Controller
     }
 
     public function sandBox(){
-       dd(request());
+        dd(request());
     }
 }

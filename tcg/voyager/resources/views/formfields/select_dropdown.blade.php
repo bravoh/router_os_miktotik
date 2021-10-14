@@ -66,14 +66,15 @@
 
             @if($row->field == 'recipient_type')
                 <?php
-                $rates = config("router_os.rates");
+                $rates = \App\PricingRate::whereType("live")->get();
+
                 $recipient_types = [
                     'select'=>"Select Customers",
                     'all'=>"All Customers",
                 ];
+
                 foreach ($rates as $rate){
-                    if($rate["type"] == "live")
-                        $recipient_types["by_".$rate['name']] = ucwords($rate['name'])." Subscribers";
+                    $recipient_types["by_".$rate->name] = ucwords($rate->name)." Subscribers";
                 }
                 ?>
 

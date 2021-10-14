@@ -5,7 +5,9 @@ namespace App\Listeners;
 use App\Customer;
 use App\Lib\MikrotikAPIClass;
 use App\Lib\TransactionRepository;
+use App\PricingRate;
 use App\Repositories\SMSRepository;
+use App\SmsTemplate;
 use App\Subscription;
 use App\Transaction;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +17,6 @@ class C2bConfirmationEventListener
 {
 
     protected $MIKROTIK = null;
-    private $rates;
 
     /**
      * Create the event listener.
@@ -25,7 +26,6 @@ class C2bConfirmationEventListener
     public function __construct()
     {
         $this->MIKROTIK = new MikrotikAPIClass();
-        $this->rates = config('router_os.rates');
     }
 
     /**
@@ -42,6 +42,7 @@ class C2bConfirmationEventListener
             ->first();
 
         Log::alert('Customer: '.json_encode($customer));
+
         try {
             //Thank you SMS
             $this->thankYouSms($customer,$transaction);
@@ -57,15 +58,14 @@ class C2bConfirmationEventListener
         $Trx = $Trx->store();
 
         if ($Trx->status !== "voucher"){
-            $rate = $this->rates[
-                $transaction->TransAmount
-            ];
+
+            $rate = PricingRate::whereName($transaction->TransAmount)->first();
 
             $data = array (
                 "name" => $customer->name,
                 "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
-                "max-limit" => $rate['max-limit'],
-                "limit-at" => $rate['limit-at'],
+                "max-limit" => $rate->maxLimit,
+                "limit-at" => $rate->limitAt,
                 "comment" =>  @$transaction->MSISDN." M-Pesa automatic plan update"
             );
 
@@ -74,11 +74,12 @@ class C2bConfirmationEventListener
 
             Subscription::updateOrCreate(['transaction_id'=>$Trx->id],[
                 "customer_id"=>$customer->id,
-                "plan"=>$rate['name'],
+                "plan"=>$rate->name,
                 'valid_from'=>date('Y-m-d h:i:s'),
                 'valid_until'=>date('Y-m-d h:i:s', strtotime("+30 days")),
                 "uuid"=>$uuid->toString()
             ]);
+
             Log::alert('New Callback Received '.json_encode($transaction));
         }
     }
@@ -86,14 +87,17 @@ class C2bConfirmationEventListener
     public function thankYouSms($customer,$trx){
         $name = $customer->name;
         $name = explode(' ',$name)[0];
-        $message = config('sms.templates.acknowledgement');
+        $templateItem = SmsTemplate::whereSms("acknowledgement")->first();
+        $message = $templateItem->template;
         $message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$trx->TransAmount,$message);
 
         Log::info($message);
+
         $MessageService = new SMSRepository();
         $resp = $MessageService->send($customer->phone,$message);
         $MessageService->saveSmsResponse($resp,$message);
+
         Log::info($resp);
     }
 }

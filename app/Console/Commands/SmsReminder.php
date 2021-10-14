@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use AfricasTalking\SDK\AfricasTalking;
 use App\Customer;
 use App\Repositories\SMSRepository;
+use App\SmsTemplate;
 use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -58,7 +59,10 @@ class SmsReminder extends Command
     public function testRunner(){
         //$name = "Brav";
         $TransAmount = 100.00;
-        $message = config('sms.templates.acknowledgement');
+
+        $templateItem = SmsTemplate::whereSms("acknowledgement")->first();
+        $message = $templateItem->template;
+
         //$message = str_replace('{name}',$name,$message);
         $message = str_replace('{amount}',$TransAmount,$message);
         $resp = $this->messenger->send("0718784058",$message);
@@ -70,10 +74,14 @@ class SmsReminder extends Command
         $in3days = date("Y-m-d", strtotime($currentDate. ' + 3 days'));
         echo "Processing records expiring on: ".$in3days."\n";
         $items = Subscription::whereDate('valid_until',$in3days)->get();
-        $message = config('sms.templates.three_days_to');
+
+        $templateItem = SmsTemplate::whereSms("three_days_to")->first();
+        $message = $templateItem->template;
+
         foreach ($items as $item){
             $customer = Customer::find($item->customer_id);
             $last_subscription = $customer->subscriptions->last();
+
             if ($last_subscription->status !== "up"){
                 $resp = $this->messenger->send($customer->phone,$message);
                 $this->messenger->saveSmsResponse($resp,$message,$customer);
@@ -81,6 +89,7 @@ class SmsReminder extends Command
                 $item->remind_status = 1;
                 $item->save();
             }
+
         }
 
     }
@@ -88,11 +97,14 @@ class SmsReminder extends Command
     public function todayRunner(){//Reminder Status 2
         echo "Processing records expiring today \n";
         $expiringToday = Subscription::whereDate('valid_until',date('Y-m-d'))->get();
-        $message = config('sms.templates.on_expiry_date');
+
+        $templateItem = SmsTemplate::whereSms("on_expiry_date")->first();
+        $message = $templateItem->template;
 
         foreach ($expiringToday as $subscription){
             $customer = Customer::find($subscription->customer_id);
             $last_subscription = $customer->subscriptions->last();
+
             if ($last_subscription->status !== "up"){
                 $time =  date('h:i A', strtotime($subscription->valid_until));
                 $message = str_replace('{time}',$time,$message);
@@ -102,6 +114,7 @@ class SmsReminder extends Command
                 $subscription->remind_status = 2;
                 $subscription->save();
             }
+
         }
 
     }
@@ -110,11 +123,14 @@ class SmsReminder extends Command
         $yesterday = date("Y-m-d", strtotime("yesterday"));
         echo "Processing records that expired yesterday: ".$yesterday."\n";
         $expiredYesterday = Subscription::whereDate('valid_until',$yesterday)->get();
-        $message = config('sms.templates.expired_yesterday');
+
+        $templateItem = SmsTemplate::whereSms("expired_yesterday")->first();
+        $message = $templateItem->template;
 
         foreach ($expiredYesterday as $subscription){
             $customer = Customer::find($subscription->customer_id);
             $last_subscription = $customer->subscriptions->last();
+
             if ($last_subscription->status !== "up"){
                 $resp = $this->messenger->send($customer->phone,$message);
                 $this->messenger->saveSmsResponse($resp,$message,$customer);
@@ -122,6 +138,7 @@ class SmsReminder extends Command
                 $subscription->remind_status = 3;
                 $subscription->save();
             }
+
         }
 
     }
