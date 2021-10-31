@@ -21,7 +21,7 @@ foreach ($rates as $rate){
         margin-right: 2px;
         line-height: 1.42857143;
         border: 1px solid transparent;
-        border-radius: 4px 4px 0 0;
+        border-radius: 4px;
     }
     .nav-tabs > li > a:hover {
         border-color: #eeeeee #eeeeee #ddd;
@@ -34,7 +34,7 @@ foreach ($rates as $rate){
         background-color: #fff;
         border: 1px solid #ddd;
         border-bottom-color: transparent;
-        border-radius: 4px !important;
+        border-radius: 4px 4px 0 0;
     }
     .nav-tabs.nav-justified {
         width: 100%;
@@ -79,6 +79,9 @@ foreach ($rates as $rate){
         .nav-tabs.nav-justified > .active > a:focus {
             border-bottom-color: #fff;
         }
+    }
+    .voyager .nav-tabs, .voyager .nav-tabs>li>a:hover{
+        background-color: white;
     }
 </style>
 <ul class="nav nav-tabs" role="tablist">
