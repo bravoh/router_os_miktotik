@@ -60,33 +60,63 @@
     @endif
 @else
     <?php $selected_value = (isset($dataTypeContent->{$row->field}) && !is_null(old($row->field, $dataTypeContent->{$row->field}))) ? old($row->field, $dataTypeContent->{$row->field}) : old($row->field); ?>
-    <select class="form-control select2 {{ $row->field }}_form_field" name="{{ $row->field }}">
+
+    @if($row->field == 'recipient_type')
+
+        <?php
+        $rates = \App\PricingRate::whereType("live")->get();
+
+        $recipient_types = [
+            'select'=>"Select Customers",
+            'all'=>"All Customers",
+        ];
+
+        foreach ($rates as $rate){
+            $recipient_types["by_".$rate->name] = ucwords($rate->name)." Subscribers";
+        }
+        ?>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
         <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
-        @if(isset($options->options))
+        @foreach($recipient_types as $key => $option)
+            <li @if($default == $key && $selected_value === NULL) class="active" @endif @if($selected_value == $key) class="active" @endif >
+                <a href="#{{$key}}" role="tab" data-toggle="tab">
+                    <icon class="fa fa-home"></icon> {{ $option }}
+                </a>
+            </li>
+        @endforeach
+    </ul>
+    <?php $selected_value = (isset($dataTypeContent->{$row->field}) && !is_null(old($row->field, $dataTypeContent->{$row->field}))) ? old($row->field, $dataTypeContent->{$row->field}) : old($row->field); ?>
+    <select style="visibility: hidden" class="{{ $row->field }}_form_field" name="{{ $row->field }}">
+                <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
+                @if(isset($options->options))
+                        <?php
+                        //$rates = config("router_os.rates");
+                        $rates = \App\PricingRate::whereType("live")->get();
 
-            @if($row->field == 'recipient_type')
-                <?php
-                $rates = \App\PricingRate::whereType("live")->get();
+                        $recipient_types = [
+                            'select'=>"Select Customers",
+                            'all'=>"All Customers",
+                        ];
 
-                $recipient_types = [
-                    'select'=>"Select Customers",
-                    'all'=>"All Customers",
-                ];
+                        foreach ($rates as $rate){
+                            $recipient_types["by_".$rate->name] = ucwords($rate->name)." Subscribers";
+                        }
+                        ?>
 
-                foreach ($rates as $rate){
-                    $recipient_types["by_".$rate->name] = ucwords($rate->name)." Subscribers";
-                }
-                ?>
-
-                @foreach($recipient_types as $key => $option)
-                    <option value="{{ $key }}" @if($default == $key && $selected_value === NULL) selected="selected" @endif @if($selected_value == $key) selected="selected" @endif>{{ $option }}</option>
-                @endforeach
-
-            @else
-                @foreach($options->options as $key => $option)
-                    <option value="{{ $key }}" @if($default == $key && $selected_value === NULL) selected="selected" @endif @if($selected_value == $key) selected="selected" @endif>{{ $option }}</option>
-                @endforeach
+                        @foreach($recipient_types as $key => $option)
+                            <option value="{{ $key }}" @if($default == $key && $selected_value === NULL) selected="selected" @endif @if($selected_value == $key) selected="selected" @endif>{{ $option }}</option>
+                        @endforeach
+                @endif
+            </select>
+    @else
+        <select class="form-control select2 {{ $row->field }}_form_field" name="{{ $row->field }}">
+            <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
+            @if(isset($options->options))
+                    @foreach($options->options as $key => $option)
+                        <option value="{{ $key }}" @if($default == $key && $selected_value === NULL) selected="selected" @endif @if($selected_value == $key) selected="selected" @endif>{{ $option }}</option>
+                    @endforeach
             @endif
-        @endif
-    </select>
+        </select>
+    @endif
 @endif

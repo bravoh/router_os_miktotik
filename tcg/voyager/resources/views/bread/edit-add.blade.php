@@ -161,8 +161,8 @@
           };
         }
 
-        function toggleSmsRecipientList(){
-            var recipient_type = $('.recipient_type_form_field').val();
+        function toggleSmsRecipientList(recipient_type){
+            //var recipient_type = $('.recipient_type_form_field').val();
 
             if (recipient_type === "select"){
                 $(".recipient_form_field").parents('div .form-group').css({
@@ -176,6 +176,13 @@
         }
 
         $('document').ready(function () {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var target = $(e.target).attr("href") // activated tab
+                var recipient_type = target.replace("#","");
+                $('.recipient_type_form_field').val(recipient_type)
+                toggleSmsRecipientList(recipient_type)
+            });
+
             $('.toggleswitch').bootstrapToggle();
 
             //Init datepicker for date fields if data-datepicker attribute defined
@@ -222,12 +229,13 @@
 
                 $('#confirm_delete_modal').modal('hide');
             });
+
             $('[data-toggle="tooltip"]').tooltip();
 
-            toggleSmsRecipientList();
-            $(".recipient_type_form_field").change(function (e){
-                toggleSmsRecipientList();
-            });
+            toggleSmsRecipientList($('.recipient_type_form_field').val());
+            //$(".recipient_type_form_field").change(function (e){
+                //toggleSmsRecipientList();
+            //});
         });
     </script>
 @stop
