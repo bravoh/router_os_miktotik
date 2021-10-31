@@ -167,16 +167,26 @@
 
         function toggleSmsRecipientList(recipient_type){
             //var recipient_type = $('.recipient_type_form_field').val();
+            $(".recipient_package_form_field").parents('div .form-group').css({
+                "display":"none"
+            });
+
+            $(".recipient_form_field").parents('div .form-group').css({
+                "display":"none"
+            });
 
             if (recipient_type === "select"){
                 $(".recipient_form_field").parents('div .form-group').css({
                     "display":"block"
                 });
-            }else{
-                $(".recipient_form_field").parents('div .form-group').css({
-                    "display":"none"
+            }
+
+            if (recipient_type === "by_package"){
+                $(".recipient_package_form_field").parents('div .form-group').css({
+                    "display":"block"
                 });
             }
+
         }
 
         $('document').ready(function () {
@@ -237,9 +247,10 @@
             $('[data-toggle="tooltip"]').tooltip();
 
             toggleSmsRecipientList($('.recipient_type_form_field').val());
-            //$(".recipient_type_form_field").change(function (e){
-                //toggleSmsRecipientList();
-            //});
+
+            $(".recipient_package_form_field").change(function (e){
+                $('.recipient_type_form_field').val($(this).val())
+            });
         });
     </script>
 @stop

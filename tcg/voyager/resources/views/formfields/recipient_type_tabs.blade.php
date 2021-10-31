@@ -1,12 +1,22 @@
 <?php
-$rates = \App\PricingRate::whereType("live")->get();
+$rates = \App\PricingRate::whereType("live")
+    ->get();
+
 $recipient_types = [
     'select'=>"Select Customers",
     'all'=>"All Customers",
 ];
+
+$tabs = [
+    'select'=>"SMS by Customer",
+    'all'=>"SMS to all Customers",
+    'by_package'=>"SMS By Package"
+];
+
 foreach ($rates as $rate){
     $recipient_types["by_".$rate->name] = ucwords($rate->name)." Subscribers";
 }
+
 ?>
 <!-- Nav tabs -->
 <style>
@@ -86,7 +96,7 @@ foreach ($rates as $rate){
 </style>
 <ul class="nav nav-tabs" role="tablist">
     <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
-    @foreach($recipient_types as $key => $option)
+    @foreach($tabs as $key => $option)
         <li @if($default == $key && $selected_value === NULL) class="active" @endif @if($selected_value == $key) class="active" @endif >
             <a href="#{{$key}}" role="tab" data-toggle="tab">
                 <icon class="fa fa-home"></icon> {{ $option }}

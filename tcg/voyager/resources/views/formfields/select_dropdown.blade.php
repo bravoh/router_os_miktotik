@@ -62,6 +62,8 @@
 
     @if($row->field == 'recipient_type')
         @include('voyager::formfields.recipient_type_tabs')
+    @elseif($row->field == 'recipient_package')
+        @include('voyager::formfields.recipient_package')
     @else
         <select class="form-control select2 {{ $row->field }}_form_field" name="{{ $row->field }}">
             <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
