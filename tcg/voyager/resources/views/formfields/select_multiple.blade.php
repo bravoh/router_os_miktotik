@@ -39,7 +39,7 @@
                      <?php $selected = 'selected="selected"'; ?>
                  @endif
 
-                <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->name }}</option>
+                <option value="{{ $customer->phone }}" {!! $selected !!}>{{ $customer->first_name }}</option>
             @endforeach
         @else
             @foreach($options->options as $key => $label)

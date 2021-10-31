@@ -23,7 +23,7 @@
                                     <select class="form-control" name="customer_id">
                                         <option value="">Select Customer</option>
                                         @foreach(\App\Customer::all() as $customer)
-                                            <option value="{{$customer->id}}">{{$customer->name}}</option>
+                                            <option value="{{$customer->id}}">{{$customer->first_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

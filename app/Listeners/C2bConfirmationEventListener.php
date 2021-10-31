@@ -62,7 +62,7 @@ class C2bConfirmationEventListener
             $rate = PricingRate::whereName($transaction->TransAmount)->first();
 
             $data = array (
-                "name" => $customer->name,
+                "name" => $customer->first_name,
                 "target" => $customer->default_target_ip,//"192.139.137.".$customer->id,
                 "max-limit" => $rate->maxLimit,
                 "limit-at" => $rate->limitAt,
@@ -85,7 +85,7 @@ class C2bConfirmationEventListener
     }
 
     public function thankYouSms($customer,$trx){
-        $name = $customer->name;
+        $name = $customer->first_name;
         $name = explode(' ',$name)[0];
         $templateItem = SmsTemplate::whereSms("acknowledgement")->first();
         $message = $templateItem->template;

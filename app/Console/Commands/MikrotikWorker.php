@@ -54,7 +54,7 @@ class MikrotikWorker extends Command
         foreach ($items as $item){
             try {
                 //$RouterClass->removeQueued(array(
-                    //'name'=>$item->customer->name,
+                    //'name'=>$item->customer->first_name,
                     //'target_ip'=>$item->customer->target_ip
                 //));
                 $this->zeroQueue($item->customer,$RouterClass);
@@ -82,7 +82,7 @@ class MikrotikWorker extends Command
             $rate = PricingRate::whereName($Trx->amount)->first();
 
             $data = array (
-                "name" => $customer->name,
+                "name" => $customer->first_name,
                 "target" => $customer->default_target_ip,
                 "max-limit" => $rate->maxLimit,
                 "limit-at" => $rate->limitAt,
@@ -111,7 +111,7 @@ class MikrotikWorker extends Command
     public function zeroQueue($customer,$MIKROTIK){
 
         $data = array (
-            "name" => $customer->name,
+            "name" => $customer->first_name,
             "target" => $customer->default_target_ip,
             "max-limit" => "0/0",
             "limit-at" => "0/0",

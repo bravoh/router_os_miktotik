@@ -37,7 +37,7 @@ class TransactionRepository
             "ref"=>date("ymdhis"),
             "trx_code"=>$this->callback->TransID,
             "customer_id"=>$this->customer->id,
-            "customer_name"=>$this->customer->name,
+            "customer_name"=>$this->customer->first_name,
             "uuid"=>$uuid->toString(),
             "status"=>'paid',
             "date"=>date("Y-m-d h:i:s")
